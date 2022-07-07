@@ -9,6 +9,6 @@ tar -xvf RC-0.1.tar.gz
 mv lss-backup-RC-0.1 lss-backup
 cd lss-backup
 chmod +x *.sh
-chmod +x functions/*.sh prep-dependencies/*.sh
+chmod +x functions/*.sh prep-dependencies/*.sh.prep
 bash install-lss-backup.sh
 ```
