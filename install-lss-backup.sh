@@ -1,5 +1,5 @@
-echo "LSS Backup will now install dependencies."
 apt install figlet
+clear
 figlet LSS BACKUP
 echo "Installing necesseary dependencies."
 apt-get install restic curl wget rsync -y
@@ -8,13 +8,14 @@ restic self-update
 echo "Creating folders"
 mkdir -p /mnt/lss-backup
 echo "Done"
-SETUPWORKDIR=$(pwd)
 
+SETUPWORKDIR=$(pwd)
 cp $SETUPWORKDIR/prep-dependencies/list-config-job-variables.sh.prep $SETUPWORKDIR/prep-dependencies/list-config-job-variables.sh
 mv $SETUPWORKDIR/prep-dependencies/list-config-job-variables.sh $SETUPWORKDIR/functions/list-config-job-variables.sh
-printf '%s\n' 1a "WORKDIR=$SETUPWORKDIR" . x | ex ./functions/list-config-job-variables.sh
 
+printf '%s\n' 1a "WORKDIR=$SETUPWORKDIR" . x | ex ./functions/list-config-job-variables.sh
 SETUPTIME=$(date)
+clear
 echo "-----------------------------------------------"
 echo "-----------------------------------------------"
 echo "Your date and time is: $SETUPTIME, is this correct? (y=Yes,n=No)"

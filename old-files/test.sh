@@ -1,0 +1,4 @@
+SETUPWORKDIR=$(pwd)
+echo $SETUPWORKDIR
+
+echo "WORKDIR=$SETUPWORKDIR" >> hello.text

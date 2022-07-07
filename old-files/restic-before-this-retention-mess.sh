@@ -1,5 +1,4 @@
 ##!/bin/bash
-clear
 figlet LSS RESTIC
 echo "Give your backup job an ID, usually numbers would be the best."
 echo "Please note that backup ID is taken as a unique identifier! Avoid simple number but rather something more complex. Example CUS01"
@@ -282,9 +281,6 @@ echo "BKDESTTYPE=$SETUPBKDESTTYPE" >> ./database/backup-jobs/"$SETUPBKID"/"$SETU
 	echo "S3 Secret access key?"
 	read SETUPRESTICS3KEY
 	echo "AWS_SECRET_ACCESS_KEY=$SETUPRESTICS3KEY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "S3 Region? Example: Dublin"
-	read SETUPRESTICS3REGION
-	echo "AWS_DEFAULT_REGION=$SETUPRESTICS3REGION" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 	fi
 
 echo "### RESTIC VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -299,62 +295,64 @@ read SETUPRETENCONFIRM
 
 if [[ $SETUPRETENCONFIRM == 'y' ]]
 then
-echo "What type of retention? Full or just keep last?"
-echo "Type FULL for full retention, type LAST for last only retention."
-echo "Full retention is keep last, keep-within-daily, keep-winthin-weekly, keep-within-monthly, keep-within-yearly"
-echo "For longterm persistent data use full retention, for fast snapshots like hourly use last only."
-read RETENTYPE
-
-if [[ $RETENTYPE == 'FULL' ]]
-then
-echo "RETENTION=YES-FULL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "RETENTION=YES" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 echo "PRUNE=YES" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-cp ./functions/lss-reten-full.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten-full.sh
+cp ./functions/lss-reten.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten.sh
 cp ./functions/lss-prune.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-prune.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten-full.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-prune.sh
 
-            echo "How many last (most recent) backups to keep? Enter a numeric number. Example: 7"
-	          read SETUPRETENLAST
+            echo "How many last (most recent) backups to keep? Enter a numeric number. Press enter to skip it!"
+            echo "You can also handle your retention policy by just simply using LAST only. Then create same backup jobs but with diffrent frequency"
+	    echo "For example if you setup your cron to run weekly and set last to number 3, it will then keep last 3 backups for the last 3 weeks."
+	    echo "This method is easier to understand but it creates more bandwidth because your daily backup will meet with weekly backup."
+	    echo "IF YOU WANT KEEP YOUR JOBS AS MINIMAL THEN SKIP LAST AND MOVE ONTO KEEP WITHIN POLICY IN THE NEXT QUESTION!"
+	    read SETUPRETENLAST
+            if [[ $SETUPRETENLAST != '' ]]
+            then
             echo "RESTIC_FORGETLAST=$SETUPRETENLAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+            else
+            echo "Skipping"
+            fi
 
-            echo "How many keep within daily backups to keep? Example: 7d means 7 days."
-            read  SETUPRETENDAILY
+            echo "How many keep within daily backups to keep? Example: 7d means 7 days. Press enter to skip it!"
+            read SETUPRETENDAILY
+            if [[ $SETUPRETENDAILY != '' ]]
+            then
             echo "RESTIC_FORGETDAILY=$SETUPRETENDAILY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+            else
+            echo "Skipping"
+            fi
 
-            echo "How many keep within weekly backups to keep? Example: 2m means two months. Please note that it uses months as per restic docs."
+            echo "How many keep within weekly backups to keep? Example: 2m means two months. Please note that it uses months as per restic docs. Press enter to skip it!"
             read SETUPRETENWEEKLY
+            if [[ $SETUPRETENWEEKLY != '' ]]
+            then
             echo "RESTIC_FORGETWEEKLY=$SETUPRETENWEEKLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+            else
+            echo "Skipping"
+            fi
 
-            echo "How many monthly backups to keep? Example: 15m means 15 months."
+            echo "How many monthly backups to keep? Example: 15m means 15 months. Press enter to skip it!"
             read SETUPRETENMONTHLY
+            if [[ $SETUPRETENMONTHLY != '' ]]
+            then
             echo "RESTIC_FORGETMONTHLY=$SETUPRETENMONTHLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+            else
+            echo "Skipping"
+            fi
 
-            echo "How many annual backups to keep? Example: 2y means 2 years."
+            echo "How many annual backups to keep? Example: 2y means 2 years. Press enter to skip it!"
             read SETUPRETENANNUAL
+            if [[ $SETUPRETENANNUAL != '' ]]
+            then
             echo "RESTIC_FORGETANNUAL=$SETUPRETENANNUAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-            echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Last:$SETUPRETENLAST--KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
-
-else
-echo "RETENTION=YES-LAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "PRUNE=YES" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-cp ./functions/lss-reten-keep-last-only.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten-keep-last-only.sh
-cp ./functions/lss-prune.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-prune.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten-keep-last-only.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-prune.sh
-
-            echo "How many last (most recent) backups to keep? Enter a numeric number. Example: 7"
-	          read SETUPRETENLAST
-            echo "RESTIC_FORGETLAST=$SETUPRETENLAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-            echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Last-only:$SETUPRETENLAST |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
-fi
+            else
+            echo "Skipping"
+            fi
 else
 echo "No retention policy will be specified."
 echo "RETENTION=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-cp ./functions/lss-no-reten.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Not-set |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 fi
 
 echo "Input your restic repository password! You MUST store it securely somewhere else! Avoid using special characters which would break linux!"
@@ -374,6 +372,14 @@ echo "Preparing starter script."
 cp ./functions/starter-script.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 
+echo "Writing to simple database file"
+if [[ $SETUPRETENCONFIRM == 'y' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Last:$SETUPRETENLAST--DD:$SETUPRETENDAILY--WW:$SETUPRETENWEEKLY--MM:$SETUPRETENMONTHLY--AN:$SETUPRETENANNUAL |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+else
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Not-set |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+fi
+
 echo "Injecting crontab."
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-cron-add.sh
 
@@ -383,24 +389,9 @@ read RUNBACKUP
 
 if [[ $RUNBACKUP == 'y' ]]
 then
+clear
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 else
-echo "It is important to atleast init restic repository otherwise scheduled cron will time out and send failed ping."
-echo "Are you 100% sure that you want to even skip restic repository init?"
-echo "Type n for No and to init restic repository now. Otherwise skip, but know the consequences."
-read RUNINITONLY
-if [[ $RUNINITONLY == 'n' ]]
-then
-# Init restic repo only, no backup data transfer.
-cp ./functions/restic-repo-init-only.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh"
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-restic-repo-init-only.sh
-/bin/bash $SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh
-else
-cp ./functions/restic-repo-init-only.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh"
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-restic-repo-init-only.sh
-echo "You must init restic repository manually otherwise your scheduled backup will fail!"
-echo "To invoke restic repository init later copy paste the command below."
-echo "/bin/bash $SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh"
-fi
+echo "Good bye!"
 fi
 fi

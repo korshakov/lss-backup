@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this is simple cron injection script to do it for you instead.
-echo "Hello its cron injector"
+
 if [[ $BKFQ == 'Daily' ]]
 then
 echo "Injecting command to crontab to the last line."
