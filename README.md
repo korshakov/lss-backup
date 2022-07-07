@@ -5,7 +5,7 @@ More information cocming soon. This is early stage of release candidate.
 To Install:
 Make sure you are downloading the latest release.
 ```
-wget [https://github.com/korshakov/lss-backup/archive/refs/tags/RC-0.1.tar.gz](https://github.com/korshakov/lss-backup/archive/refs/tags/Latest.tar.gz)
+wget https://github.com/korshakov/lss-backup/archive/refs/tags/Latest.tar.gz
 ```
 ```
 tar -xvf Latest.tar.gz
