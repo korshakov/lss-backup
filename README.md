@@ -7,3 +7,7 @@ wget https://github.com/korshakov/lss-backup/archive/refs/tags/RC-0.1.tar.gz<br>
 tar -xvf RC-0.1.tar.gz<br>
 mv lss-backup-RC-0.1 lss-backup<br>
 cd lss-backup<br>
+chmod +x *.sh
+chmod +x functions/*.sh
+chmod +x prep-dependencies/*.sh
+bash install-lss-backup.sh
