@@ -9,7 +9,7 @@ wget https://github.com/korshakov/lss-backup/archive/refs/tags/Latest.tar.gz
 ```
 ```
 tar -xvf Latest.tar.gz
-mv lss-backup-latest lss-backup
+mv lss-backup-Latest lss-backup
 cd lss-backup
 chmod +x *.sh
 chmod +x functions/*.sh prep-dependencies/*.sh.prep
