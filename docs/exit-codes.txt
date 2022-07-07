@@ -1,0 +1,35 @@
+7 - Local source folder does not exist, nothing to backup!
+8 - Local destination folder creation failed!
+9 - Automatic mount of source directory failed! Maybe wrong config values?
+10 - Automatic mount of destination directory failed! Maybe wrong config values?
+11 - Source types are incorrect inside config file! Config was specified incorrectly.
+12 - Destination types are incorrect inside config file! Config was specified incorrectly.
+13 - SMB/NFS Source folder is empty! There should be something to backup!
+14 - SMB/NFS Destination folder creation failed!
+15 - Restic reporsitory check timed out either by user or cronjob. If by user this can be ignored, user should know what he is doing. If by cronjob there is serious data missmatch and whole backup job must be reviewed and all data checked!
+16 - User confirmed that this should not happen! This is not good!
+17 - Neither restic or rsync program was called from variables. This can only mean that env file has been corrupted or modified by user incorrectly.
+18 - Restic (1) fatal error - no spashot created!
+19 - Restic (3) couldnt read some files, snapshot is created, but incomplete.
+20 - Rsync (1) Syntax or usage error
+21 - Rsync (2) Protocol incompatibility
+22 - Rsync (3) Errors selecting input/output files, dirs
+23 - Rsync (4) Requested action not supported: an attempt was made to manipulate 64-bit
+24 - Rsync (5) Error starting client-server protocol
+25 - Rsync (6) Daemon unable to append to log-file
+26 - Rsync (10) Error in socket I/O
+27 - Rsync (11) Error in file I/O
+28 - Rsync (12) Error in rsync protocol data stream
+29 - Rsync (13) Errors with program diagnostics
+30 - Rsync (14) Error in IPC code
+31 - Rsync (20) Received SIGUSR1 or SIGINT
+32 - Rsync (21) Some error returned by waitpid()
+33 - Rsync (22) Error allocating core memory buffers
+34 - Rsync (23) Partial transfer due to error
+35 - Rsync (24) Partial transfer due to vanished source files
+36 - Rsync (25) The --max-delete limit stopped deletions
+37 - Rsync (30) Timeout in data send/receive
+38 - Rsync (35) Timeout waiting for daemon connection
+39 - Restic finished with unknown error! Investigate.
+40 - Rsync finished with unknown error! Investigate.
+
