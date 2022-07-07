@@ -1,5 +1,3 @@
-# echo "Hello this is config backup check."
-# echo "For now there isnt much here"
 
 
 echo "Print out of variables to double check if you wish."
