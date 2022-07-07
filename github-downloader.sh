@@ -10,5 +10,5 @@ chmod +x ./prep-dependencies/*.sh
 
 
 # curl command
-curl -o github-downloader.sh https://lssolutions.ie/lss-backup/github-downloader.sh
-bash ./github-downloader.sh
+# curl -o github-downloader.sh https://lssolutions.ie/lss-backup/github-downloader.sh
+# bash ./github-downloader.sh
