@@ -1,3 +1,4 @@
+echo "LSS Backup will now install dependencies."
 apt install figlet
 figlet LSS BACKUP
 echo "Installing necesseary dependencies."
