@@ -138,7 +138,8 @@ read restoretargetdir
 }
 
 ### END OF LOCAL MOUNT FUNCTION
-
+clear
+figlet LSS RESTORE
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "--------------------------------"
 echo "List of backup(s):"
@@ -188,7 +189,7 @@ select snapshotchoice in "LATEST" "SPECIFY-ID"; do
 done
 
 else
-echo "Restoring data using rsync."
+echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 rsync -avp $LSS_REPOSITORY $restoretargetdir
 fi
 
