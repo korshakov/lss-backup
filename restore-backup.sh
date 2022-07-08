@@ -169,10 +169,13 @@ done
 
 if [[ $PROGRAM == 'RESTIC' ]]
 then
-echo "Ask further restic questions." 
+echo "Listing snapshots."
+echo "------------------"
+restic -r $LSS_REPOSITORY snapshots
+
 else
 echo "Restoring data using rsync."
-rsync -avp $LSS_REPOSITORY 
+rsync -avp $LSS_REPOSITORY $restoretargetdir
 fi
 
 
