@@ -17,26 +17,26 @@ read smbrestoreuserpasswd
 echo "Domain?"
 read smbrestoredomain
 echo "Where to mountpoint?"
-read smbrestoremountpoint
+read restoretargetdir
 
 echo "Checking if source SMB is mounted by something else."
-if mount | grep "$smbrestoremountpoint" > /dev/null; then
+if mount | grep "$restoretargetdir" > /dev/null; then
 echo "Smb source mountpoint is mounted! Choose a diffrent path!"
 exit
 else
 # Mountpoint is clear we can mount smb. Checking if domain was specified.
 # Checking if mountpoint directory exists first.
-echo "Checking if $smbrestoremountpoint exists"
-if [ -d "$smbrestoremountpoint" ];
+echo "Checking if $restoretargetdir exists"
+if [ -d "$restoretargetdir" ];
 then
 echo "Directory exists."
 else
-mkdir -p "$smbrestoremountpoint"
+mkdir -p "$restoretargetdir"
 fi
 if [[ -z "$smbrestoredomain" ]]
 then
 echo "Mounting smb without domain"
-mount -t cifs //"$smbipaddr"/"$smbrestoremountpoint" "$smbrestoredir" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd"
+mount -t cifs //"$smbipaddr"/"$restoretargetdir" "$smbrestoredir" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd"
 echo "Checking if mount was succesfull"
 if mount | grep "$smbrestoredir" > /dev/null; then
 echo "SMB restore directory mounted successfully."
@@ -46,7 +46,7 @@ exit
 fi
 else
 echo "Mounting smb with domain."
-mount -t cifs //"$smbipaddr"/"$smbrestoredir" "$smbrestoremountpoint" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd",domain="$smbrestoredomain"
+mount -t cifs //"$smbipaddr"/"$smbrestoredir" "$restoretargetdir" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd",domain="$smbrestoredomain"
 echo "Checking if mount was succesfull"
 if mount | grep "$smbrestoredir" > /dev/null; then
 echo "SMB restore directory mounted successfully."
@@ -75,26 +75,26 @@ read nfsrestoreuserpasswd
 echo "Domain?"
 read nfsrestoredomain
 echo "Where to mountpoint?"
-read nfsrestoremountpoint
+read restoretargetdir
 
 echo "Checking if source NFS is mounted by something else."
-if mount | grep "$nfsrestoremountpoint" > /dev/null; then
+if mount | grep "$restoretargetdir" > /dev/null; then
 echo "NFS source mountpoint is mounted! Choose a diffrent path!"
 exit
 else
 # Mountpoint is clear we can mount nfs. Checking if domain was specified.
 # Checking if mountpoint directory exists first.
-echo "Checking if $smbrestoremountpoint exists"
-if [ -d "$nfsrestoremountpoint" ];
+echo "Checking if $restoretargetdir exists"
+if [ -d "$restoretargetdir" ];
 then
 echo "Directory exists."
 else
-mkdir -p "$nfsrestoremountpoint"
+mkdir -p "$restoretargetdir"
 fi
 if [[ -z "$nfsrestoredomain" ]]
 then
 echo "Mounting nfs without domain"
-mount -t nfs -O user="$nfsrestoreusername",pass="$nfsrestoreuserpasswd" "$nfsipaddr":/"$nfsrestoredir" "$nfsrestoremountpoint"
+mount -t nfs -O user="$nfsrestoreusername",pass="$nfsrestoreuserpasswd" "$nfsipaddr":/"$nfsrestoredir" "$restoretargetdir"
 echo "Checking if mount was succesfull"
 if mount | grep "$nfsrestoredir" > /dev/null; then
 echo "NFS restore directory mounted successfully."
@@ -104,7 +104,7 @@ exit
 fi
 else
 echo "Mounting nfs with domain."
-mount -t nfs -O user="$nfsrestoreusername",pass="$nfsrestoreuserpasswd",domain="$nfsrestoredomain" "$nfsipaddr":/"$nfsrestoredir" "$nfsrestoremountpoint"
+mount -t nfs -O user="$nfsrestoreusername",pass="$nfsrestoreuserpasswd",domain="$nfsrestoredomain" "$nfsipaddr":/"$nfsrestoredir" "$restoretargetdir"
 echo "Checking if mount was succesfull"
 if mount | grep "$nfsrestoredir" > /dev/null; then
 echo "NFS restore directory mounted successfully."
@@ -123,17 +123,17 @@ fi
 localrestoremountfunction ()
 {
 echo "Local directory path?"
-read localrestoredirpath
-    if [ -d "$localrestoredirpath" ];
+read restoretargetdir
+    if [ -d "$restoretargetdir" ];
     then
-    if find "$localrestoredirpath" -mindepth 1 -maxdepth 1 | read; then
+    if find "$restoretargetdir" -mindepth 1 -maxdepth 1 | read; then
     echo "Directory contains folders/files. Use empty folder instead!"
     exit
     else
     echo "All good here."
     fi
     else
-    mkdir -p "$localrestoredirpath"
+    mkdir -p "$restoretargetdir"
     fi  
 }
 
@@ -172,6 +172,7 @@ then
 echo "Ask further restic questions." 
 else
 echo "Restoring data using rsync."
+rsync -avp $LSS_REPOSITORY 
 fi
 
 
