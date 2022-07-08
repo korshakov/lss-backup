@@ -167,7 +167,7 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
-if [[ $BPROGRAM == 'RESTIC' ]]
+if [[ $PROGRAM == 'RESTIC' ]]
 then
 echo "Ask further restic questions." 
 else
