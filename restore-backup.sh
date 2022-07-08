@@ -137,6 +137,7 @@ read localrestoredirpath
     fi  
 }
 
+### END OF LOCAL MOUNT FUNCTION
 
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "--------------------------------"
