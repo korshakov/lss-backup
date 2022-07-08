@@ -159,7 +159,8 @@ done
 restic-mount ()
 {
 
-echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$restoretargetdir";
+mkdir -p $restoretargetdir/fusemount
+echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$restoretargetdir/fusemount";
 
 }
 
