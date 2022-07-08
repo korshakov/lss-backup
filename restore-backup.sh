@@ -158,13 +158,15 @@ done
 
 restic-mount ()
 {
-echo "Would you like to mount latest or specify snapshot id?"
-select snapshotchoice in "LATEST" "SPECIFY-ID"; do
-    case $snapshotchoice in
-    LATEST ) echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount latest "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished."  ; break;;
-    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$resticsnapshotid" "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished." ; exit;;
-    esac
-done
+echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished.";
+
+#echo "Would you like to mount latest or specify snapshot id?"
+#select snapshotchoice in "LATEST" "SPECIFY-ID"; do
+#    case $snapshotchoice in
+#    LATEST ) echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount latest "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished."  ; break;;
+#    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$resticsnapshotid" "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished." ; exit;;
+#    esac
+#done
 }
 
 ### END OF RESTIC MOUNT SNAPSHOT FUNCTION
