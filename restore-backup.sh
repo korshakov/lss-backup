@@ -158,6 +158,7 @@ done
 
 restic-mount ()
 {
+
 echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished.";
 
 #echo "Would you like to mount latest or specify snapshot id?"
