@@ -177,8 +177,8 @@ echo "Would you like to restore latest or specify snapshot id?"
 
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
-    LATEST ) echo "Restoring data." restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir"  ; break;;
-    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data." restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir" ; exit;;
+    LATEST ) echo "Restoring data."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir"  ; break;;
+    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir" ; exit;;
     esac
 done
 
