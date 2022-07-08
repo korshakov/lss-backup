@@ -174,8 +174,7 @@ else
 echo "Restoring data using rsync."
 fi
 
-#echo "Where would you like to restore files? SMB,NFS or LOCAL?"
-#read RESTORELOCTYPE
+
 else
 echo "Incorrect backup ID!"
 ./restore-backup.sh
