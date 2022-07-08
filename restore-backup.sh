@@ -155,7 +155,6 @@ if [ -d "./database/backup-jobs/$BACKUPRESTOREID" ];
 then
 # load backup job config file
 source ./database/backup-jobs/$BACKUPRESTOREID/$BACKUPRESTOREID-Configuration.env
-
 echo "Where would you like to restore files?"
 select restoreloctype in "LOCAL" "SMB" "NFS"; do
     case $restoreloctype in
