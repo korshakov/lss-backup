@@ -141,7 +141,6 @@ read restoretargetdir
 
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "--------------------------------"
-echo "Restoration process is for restic only."
 echo "List of backup(s):"
 echo "--------------------------------"
 column -t ./database/backup-database.txt
