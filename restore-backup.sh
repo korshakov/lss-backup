@@ -118,6 +118,25 @@ fi
 
 ### END OF NFS MOUNT FUNCTION
 
+### LOCAL MOUNT FUNCTION
+
+localrestoremountfunction ()
+{
+echo "Local directory path?"
+read localrestoredirpath
+    if [ -d "$localrestoredirpath" ];
+    then
+    if find "$localrestoredirpath" -mindepth 1 -maxdepth 1 | read; then
+    echo "Directory contains folders/files. Use empty folder instead!"
+    exit
+    else
+    echo "All good here."
+    fi
+    else
+    mkdir -p "$localrestoredirpath"
+    fi  
+}
+
 
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "--------------------------------"
@@ -137,7 +156,8 @@ then
 echo "Where would you like to restore files?"
 select restoreloctype in "LOCAL" "SMB" "NFS"; do
     case $restoreloctype in
-        LOCAL ) echo "Input your local directory path. Example /restore/data-folder" read localrestoredir ; break;;
+
+        LOCAL ) localrestoremountfunction ; break;;
 
         SMB ) smbrestoremountfunction ; break;;
 
