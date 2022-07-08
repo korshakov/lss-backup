@@ -167,6 +167,12 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
+if if [[ $BPROGRAM == 'RESTIC' ]]
+then
+echo "Ask further restic questions." 
+else
+echo "Restoring data using rsync."
+fi
 
 #echo "Where would you like to restore files? SMB,NFS or LOCAL?"
 #read RESTORELOCTYPE
