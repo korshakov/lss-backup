@@ -138,6 +138,36 @@ read restoretargetdir
 }
 
 ### END OF LOCAL MOUNT FUNCTION
+
+### RESTIC RESTORE SNAPSHOT FUNCTION
+
+restic-restore ()
+{
+echo "Would you like to restore latest or specify snapshot id?"
+select snapshotchoice in "LATEST" "SPECIFY-ID"; do
+    case $snapshotchoice in
+    LATEST ) echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir"; echo "Restore finished."  ; break;;
+    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir"; echo "Restore finished." ; exit;;
+    esac
+done
+}
+
+### END OF RESTIC RESTORE SNAPSHOT FUNCTION
+
+### RESTIC MOUNT FUNCTION FUNCTION
+
+restic-mount ()
+{
+echo "Would you like to mount latest or specify snapshot id?"
+select snapshotchoice in "LATEST" "SPECIFY-ID"; do
+    case $snapshotchoice in
+    LATEST ) echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount latest "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished."  ; break;;
+    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$resticsnapshotid" "$restoretargetdir"; echo "Mount finished. You can browse your data. Pres CTRL+C when finished." ; exit;;
+    esac
+done
+}
+
+### END OF RESTIC MOUNT SNAPSHOT FUNCTION
 clear
 figlet LSS RESTORE
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
@@ -179,18 +209,20 @@ echo "Listing snapshots."
 echo "------------------"
 restic -r $LSS_REPOSITORY snapshots
 echo "-------------------------------"
-echo "Would you like to restore latest or specify snapshot id?"
 
-select snapshotchoice in "LATEST" "SPECIFY-ID"; do
-    case $snapshotchoice in
-    LATEST ) echo "Restoring data."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir"  ; break;;
-    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir" ; exit;;
+echo "You can either restore all data or mount your backup to fuse and copy only what you need."
+echo "Which option do you want to continue with?"
+select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
+    case $snapshotrestoretype in
+    Restore-All-Data ) restic-restore ; break;;
+    Mount-Backup-Instead ) restic-mount ; exit;;
     esac
-done
-
+    done 
 else
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
+echo "Restoring data to to $restoretargetdir"
 rsync -avp $LSS_REPOSITORY $restoretargetdir
+echo "Restore finished."
 fi
 
 
