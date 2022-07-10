@@ -36,7 +36,7 @@ fi
 if [[ -z "$smbrestoredomain" ]]
 then
 echo "Mounting smb without domain"
-mount -t cifs //"$smbipaddr"/"$restoretargetdir" "$smbrestoredir" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd"
+mount -t cifs //"$smbipaddr"/"$smbrestoredir" "$restoretagetdir" -o username="$smbrestoreusername",password="$smbrestoreuserpasswd"
 echo "Checking if mount was succesfull"
 if mount | grep "$smbrestoredir" > /dev/null; then
 echo "SMB restore directory mounted successfully."
