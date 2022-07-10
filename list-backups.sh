@@ -6,7 +6,7 @@ echo "List of backup(s):"
 echo "--------------------------------"
 column -t ./database/backup-database.txt
 echo "--------------------------------"
-echo "Would you like to view backup env file? (y=Yes,n=No)"
+echo "Would you like to view backup .env file? (y=Yes,n=No)"
 read OPENENVFILE
 	if [[ $OPENENVFILE == 'y' ]]
 	then

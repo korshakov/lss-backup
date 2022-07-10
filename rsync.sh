@@ -7,7 +7,7 @@ read SETUPBKID
 # Checking if backup job already exist"
 if [ -d "./database/backup-jobs/"$SETUPBKID"" ];
 then
-echo "Backup ID already taken! Exitting"
+echo "Backup ID already taken! Exiting"
 exit
 else
 mkdir -p ./database/backup-jobs/"$SETUPBKID"
@@ -112,7 +112,7 @@ fi
 
 if [[ $SETUPBKFQ != 'Daily' ]] && [[ $SETUPBKFQ != 'Weekly' ]] && [[ $SETUPBKFQ != 'Monthly' ]]
 then
-echo "Your backup frequence is not mathing either Daily, Weekly or Monthly! Exitting."
+echo "Your backup frequency is not matching either Daily, Weekly or Monthly! Exitting."
 rm -rf ./database/backup-jobs/$SETUPBKID
 exit
 fi

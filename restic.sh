@@ -8,7 +8,7 @@ read SETUPBKID
 # Checking if backup job already exist"
 if [ -d "./database/backup-jobs/"$SETUPBKID"" ];
 then
-echo "Backup ID already taken! Exitting"
+echo "Backup ID already taken! Exiting"
 exit
 else
 mkdir -p ./database/backup-jobs/"$SETUPBKID"
@@ -113,7 +113,7 @@ fi
 
 if [[ $SETUPBKFQ != 'Daily' ]] && [[ $SETUPBKFQ != 'Weekly' ]] && [[ $SETUPBKFQ != 'Monthly' ]]
 then
-echo "Your backup frequence is not mathing either Daily, Weekly or Monthly! Exitting."
+echo "Your backup frequency is not matching either Daily, Weekly or Monthly! Exiting."
 rm -rf ./database/backup-jobs/$SETUPBKID
 exit
 fi
@@ -202,7 +202,7 @@ echo "BKDESTTYPE=$SETUPBKDESTTYPE" >> ./database/backup-jobs/"$SETUPBKID"/"$SETU
 	if [[ $SETUPBKDESTTYPE == 'LOCAL' ]]
 	then
 	echo "### LOCAL DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "What is your LOCAL destination directory? Example: /home/user/my-backedup-files"
+	echo "What is your LOCAL destination directory? Example: /home/user/my-backup-files"
 	read SETUPLSS_REPOSITORY
 	echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
@@ -292,8 +292,8 @@ echo "### RESTIC VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBK
 echo "Would you like to setup retention policy? (y=Yes,n=No)"
 echo "As of right now retention policy is invoked right after backup. Custom schedule may be added in future."
 echo "As of right now pruning is invoked right after retention. Custom schedule may be added in future."
-echo "If you dont setup retention policy all backups will be kept and you will eventually run out of space."
-echo "System is setup use within policy for more consistent data trought out the time!"
+echo "If you do not setup retention policy all backups will be kept and you will eventually run out of space."
+echo "System is setup use within policy for more consistent data trough out the time!"
 
 read SETUPRETENCONFIRM
 
@@ -301,8 +301,8 @@ if [[ $SETUPRETENCONFIRM == 'y' ]]
 then
 echo "What type of retention? Full or just keep last?"
 echo "Type FULL for full retention, type LAST for last only retention."
-echo "Full retention is keep last, keep-within-daily, keep-winthin-weekly, keep-within-monthly, keep-within-yearly"
-echo "For longterm persistent data use full retention, for fast snapshots like hourly use last only."
+echo "Full retention is keep last, keep-within-daily, keep-within-weekly, keep-within-monthly, keep-within-yearly"
+echo "For long-term persistent data use full retention, for fast snapshots like hourly use last only."
 read RETENTYPE
 
 if [[ $RETENTYPE == 'FULL' ]]
@@ -357,7 +357,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Not-set |$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 fi
 
-echo "Input your restic repository password! You MUST store it securely somewhere else! Avoid using special characters which would break linux!"
+echo "Input your restic repository password! You MUST store it securely somewhere else! Avoid using special characters which would break Linux!"
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
@@ -385,8 +385,8 @@ if [[ $RUNBACKUP == 'y' ]]
 then
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 else
-echo "It is important to atleast init restic repository otherwise scheduled cron will time out and send failed ping."
-echo "Are you 100% sure that you want to even skip restic repository init?"
+echo "It is important to at least initialize restic repository otherwise scheduled cron will time out and send failed ping."
+echo "Are you 100% sure that you want to even skip restic repository initialization?"
 echo "Type n for No and to init restic repository now. Otherwise skip, but know the consequences."
 read RUNINITONLY
 if [[ $RUNINITONLY == 'n' ]]
@@ -398,8 +398,8 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 else
 cp ./functions/restic-repo-init-only.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh"
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-restic-repo-init-only.sh
-echo "You must init restic repository manually otherwise your scheduled backup will fail!"
-echo "To invoke restic repository init later copy paste the command below."
+echo "You must initialize restic repository manually otherwise your scheduled backup will fail!"
+echo "To invoke restic repository initialization later copy paste the command below."
 echo "/bin/bash $SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-restic-repo-init-only.sh"
 fi
 fi

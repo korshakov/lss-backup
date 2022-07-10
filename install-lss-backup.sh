@@ -1,7 +1,7 @@
 apt install figlet
 clear
 figlet LSS BACKUP
-echo "Installing necesseary dependencies."
+echo "Installing necessary dependencies."
 apt-get install restic curl wget rsync -y
 echo "Updating restic to the latest version manually"
 restic self-update
@@ -23,7 +23,7 @@ echo "This is important to set correctly for healthchecks to send pings in the r
 read TIMECORRECT
 if [[ $TIMECORRECT != 'y' ]]
 then
-echo "Set your correct timezone now. Please refer to man pages on how to setup timezone, example: Europe/Dublin"
+echo "Set your correct time zone now. Please refer to man pages on how to setup timezone, example: Europe/Dublin"
 read SETUPTIMEZONE
 timedatectl set-timezone $SETUPTIMEZONE
 echo "Your new date and time is: $SETUPTIME"

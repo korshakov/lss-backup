@@ -13,7 +13,7 @@ then
 
 	# Checking if full destructive mode or just configuration delete.
 	echo "Would you like to delete backup data as well? Warning! This is not unrecoverable process!"
-	echo "To delete backup data as well type exaclty Yes-I-Do skip by pressing enter or type no."
+	echo "To delete backup data as well type exactly Yes-I-Do, skip by pressing enter or type no."
 	read DATADESTROY
 	if [[ $DATADESTROY == 'Yes-I-Do' ]]
 	then
@@ -22,26 +22,26 @@ then
 		source ./database/backup-jobs/$BKDESTROY/$BKDESTROY-Configuration.env
 		if [[ $BKSOURCETYPE == 'SMB' ]] || [[ $BKSOURCETYPE == 'NFS' ]]
 		then
-		echo "Umounting source share"
+		echo "Unmounting source share"
 		umount /mnt/lss-backup/$BKID/source
 		echo "Removing source mount point directory"
 		rm -rf /mnt/lss-backup/$BKID/source
     else
     echo "Seems like your source directory is set to local. Not touching that!"
     fi
-		# Umounting destination shares and deleting mountpoints. Again backups in destinations are not deleted as of yet in this version of script.
+		# Unmounting destination shares and deleting mountpoints. Again backups in destinations are not deleted as of yet in this version of script.
     if [[ $BKDESTTYPE == 'SMB' ]] || [[ $BKDESTTYPE == 'NFS' ]]
     then
 		echo "DESTROYING ALL DESTINATION DATA NOW!"
 		rm -rf /mnt/lss-backup/$BKID/destination/$BKID-$BKFQ-$BKNAME
 		echo "Done"
-    echo "Umounting destination share"
+    echo "Unmounting destination share"
     umount /mnt/lss-backup/$BKID/destination
-    echo "Removing destination mount point directory"
+    echo "Removing destination mount point directory."
     # deleting backup job mount folder.
     rm -rf /mnt/lss-backup/$BKID/destination
 		fi
-		# Deleting backup job mount point base folder based ib backup job id for both source and destination.
+		# Deleting backup job mount point base folder based on backup job id for both source and destination.
 		if [[ $BKSOURCETYPE == 'SMB' ]] || [[ $BKSOURCETYPE == 'NFS' ]] || [[ $BKDESTTYPE == 'SMB' ]] || [[ $BKDESTTYPE == 'NFS' ]]
 		then
 		echo "Deleting backup job ID: $BKID mountpoint base folder."
@@ -74,17 +74,17 @@ then
 		source ./database/backup-jobs/$BKDESTROY/$BKDESTROY-Configuration.env
 		if [[ $BKSOURCETYPE == 'SMB' ]] || [[ $BKSOURCETYPE == 'NFS' ]]
 		then
-		echo "Umounting source share"
+		echo "Unmounting source share"
 		umount /mnt/lss-backup/$BKID/source
 		echo "Removing source mount point directory"
 		rm -rf /mnt/lss-backup/$BKID/source
     else
     echo "Seems like your source directory is set to local. Not touching that!"
     fi
-    # Umounting destination shares and deleting mountpoints. Again backups in destinations are not deleted as of yet in this version of script.
+    # Unmounting destination shares and deleting mountpoints. Again backups in destinations are not deleted as of yet in this version of script.
     if [[ $BKDESTTYPE == 'SMB' ]] || [[ $BKDESTTYPE == 'NFS' ]]
     then
-    echo "Umounting destination share"
+    echo "Unmounting destination share."
     umount /mnt/lss-backup/$BKID/destination
     echo "Removing destination mount point directory"
     rm -rf /mnt/lss-backup/$BKID/destination
