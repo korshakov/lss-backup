@@ -61,97 +61,97 @@ if [[ $RSYNCCODE != '0' ]]
 then
     if [[ $RSYNCCODE == '1' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/20 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '2' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/21 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '3' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/22 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '4' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/23 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '5' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/24 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '6' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/25 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '10' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/26 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '11' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/27 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '12' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/28 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '13' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/29 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '14' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/30 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '20' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/31 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '21' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/32 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '22' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/33 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '23' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/34 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '24' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/35 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '25' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/36 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '30' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/37 -T 10 -t 5 -O /dev/null
     fi
     if [[ $RSYNCCODE == '35' ]]
     then
-    echo "Restic finished with error $RSYNCCODE Sending failed ping!"
+    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/38 -T 10 -t 5 -O /dev/null
     fi
 
