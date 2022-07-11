@@ -221,6 +221,7 @@ select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
     done
 
 else
+localrestoremountfunction;
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
 rsync -avp $LSS_REPOSITORY $restoretargetdir
