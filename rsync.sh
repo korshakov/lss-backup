@@ -18,8 +18,8 @@ echo "BKID=$SETUPBKID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Config
 echo "PROGRAM=RSYNC" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "Would you like to run rsync with --no-perms --no-owner --no-group? This is handy if sync is between mounted folders."
-select rsyncmode in "YES" "NO"; do
-    case $rsyncmode in
+select setrsyncmode in "YES" "NO"; do
+    case $setrsyncmode in
 
         YES ) echo "RSYNCMODE=NOPERMNOOWNNOGP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env" ; break;;
 
