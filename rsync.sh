@@ -17,6 +17,17 @@ SETUPTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 echo "BKID=$SETUPBKID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 echo "PROGRAM=RSYNC" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
+echo "Would you like to run rsync with --no-perms --no-owner --no-group? This is handy if sync is between mounted folders."
+select rsyncmode in "YES" "NO"; do
+    case $rsyncmode in
+
+        YES ) echo "RSYNCMODE=NOPERMNOOWNNOGP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env" ; break;;
+
+        NO ) echo "RSYNCMODE=NORMAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env" ; exit;;
+
+    esac
+done
+
 # Setting up work directory
 echo "CREATIONTIMESTAMP=$SETUPTIMESTAMP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 SETUPWORKDIR=$(pwd)
