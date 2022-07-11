@@ -143,18 +143,6 @@ read restoretargetdir
 
 restic-restore ()
 {
-echo "Where would you like to restore files?"
-select restoreloctype in "LOCAL" "SMB" "NFS"; do
-    case $restoreloctype in
-
-        LOCAL ) localrestoremountfunction ; break;;
-
-        SMB ) smbrestoremountfunction ; break;;
-
-	NFS ) nfsrestoremountfunction ; exit;;
-    esac
-done
-
 echo "Would you like to restore latest or specify snapshot id?"
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
@@ -170,8 +158,6 @@ done
 
 restic-mount ()
 {
-
-localrestoremountfunction;
 
 mkdir -p $restoretargetdir/fusemount
 echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY mount "$restoretargetdir/fusemount";
@@ -196,7 +182,17 @@ if [ -d "./database/backup-jobs/$BACKUPRESTOREID" ];
 then
 # load backup job config file
 source ./database/backup-jobs/$BACKUPRESTOREID/$BACKUPRESTOREID-Configuration.env
+echo "Where would you like to restore files?"
+select restoreloctype in "LOCAL" "SMB" "NFS"; do
+    case $restoreloctype in
 
+        LOCAL ) localrestoremountfunction ; break;;
+
+        SMB ) smbrestoremountfunction ; break;;
+
+	NFS ) nfsrestoremountfunction ; exit;;
+    esac
+done
 
 if [[ $PROGRAM == 'RESTIC' ]]
 then
@@ -218,8 +214,7 @@ select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
     Restore-All-Data ) restic-restore ; break;;
     Mount-Backup-Instead ) restic-mount ; exit;;
     esac
-    done
-
+    done 
 else
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
