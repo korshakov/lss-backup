@@ -9,7 +9,7 @@ wget https://github.com/korshakov/lss-backup/archive/refs/tags/v2.tar.gz
 ```
 ```
 tar -xvf v2.tar.gz
-mv lss-backup-Latest lss-backup
+mv lss-backup-2 lss-backup
 cd lss-backup
 chmod +x *.sh
 chmod +x functions/*.sh prep-dependencies/*.sh.prep
