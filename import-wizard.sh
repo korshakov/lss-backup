@@ -102,7 +102,7 @@ fi
 rsyncimport(){
 
 SETUPWORKDIR=$(pwd)
-
+TIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 
 #create executable file for cronjob starter file.sh
 
