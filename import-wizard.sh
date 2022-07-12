@@ -35,7 +35,7 @@ if [ -f "$importfile" ]; then
     if [ -d "./database/backup-jobs/"$BKID"" ];
     then
     echo "Backup ID already taken! Would you like to override existing backup job?"
-    echo "Warning this can cause catastrphyc data loss if your import file contains incorrect values!"
+    echo "Warning this can cause catastrophyc data loss if your import file contains incorrect values!"
     select importoverride in "YES" "NO"; do
     case $importoverride in
 
