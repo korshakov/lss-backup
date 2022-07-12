@@ -4,7 +4,6 @@
 
 ### DESTINATION CHECKS
 restore-source-check () {
-echo "Checking if source to restore is SMB."
 if [[ $BKDESTTYPE == 'SMB' ]]
 then
  echo "Checking if source to restore SMB is mounted!"
@@ -38,8 +37,6 @@ then
 
 	fi
  fi
-else
-echo "Checking if source to restore is NFS."
 fi
 
 # NFS Source directory checks #
@@ -76,8 +73,6 @@ then
 
         fi
  fi
-else
-echo "Checking if source to restore is LOCAL."
 fi
 
 if [[ $BKDESTTYPE == 'LOCAL' ]]
@@ -98,6 +93,7 @@ fi
 
 smbrestoremountfunction ()
 {
+smbrestoremountfunctiontype=SMB
 echo "IP Address?"
 read smbipaddr
 echo "Share name?"
@@ -156,6 +152,7 @@ fi
 
 nfsrestoremountfunction ()
 {
+smbrestoremountfunctiontype=NFS
 echo "IP Address?"
 read nfsipaddr
 echo "Share path?"
@@ -214,6 +211,7 @@ fi
 
 localrestoremountfunction ()
 {
+smbrestoremountfunctiontype=LOCAL
 echo "Local directory path?"
 read restoretargetdir
     if [ -d "$restoretargetdir" ];
@@ -246,12 +244,12 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
 	NFS ) nfsrestoremountfunction ; exit;;
     esac
 done
-
+mkdir -p $restoretargetdir/LSS-RESTORE-$BKID
 echo "Would you like to restore latest or specify snapshot id?"
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
-    LATEST ) echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir"; echo "Restore finished."  ; break;;
-    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir"; echo "Restore finished." ; exit;;
+    LATEST ) echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir/LSS-RESTORE-$BKID"; echo "Restore finished."  ; break;;
+    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir/LSS-RESTORE-$BKID"; echo "Restore finished." ; exit;;
     esac
 done
 }
@@ -290,10 +288,48 @@ done
 
 ### END OF RSYNC RESTORE
 
+### RESTORE UNMOUNT
+
+restoredestumount () {
+
+if [[ $smbrestoremountfunctiontype == 'SMB' ]] || [[ $smbrestoremountfunctiontype == 'NFS' ]]
+then
+umount "$restoretargetdir"
+rm -rf "$restoretargetdir"
+echo "Tidy up succesfull."
+else
+echo "Tidy up failed! Due to called tidy up function, restore destination was specified as SMB/NFS but something got wrong!"
+fi
+
+}
+
+### END OF RESTORE UNMOUNT
+
 ### RESTORE TIDY UP
 
+### I need to add check here if user has actually chosen to restore to SMB/NFS
+
+restore-tidyup (){
+
+if [[ $smbrestoremountfunctiontype == 'SMB' ]] || [[ $smbrestoremountfunctiontype == 'NFS' ]]
+then
+echo "Would you like to disconnect restore destination shares?"
+select restorecleanup in "YES" "NO"; do
+    case $restorecleanup in
+
+        YES ) restoredestumount ; break;;
+
+        NO ) echo "Nothing to do." ; exit;;
+
+    esac
+done
+fi
+}
 
 ### END OF RESTORE TIDY UP
+
+################################ END OF ALL FUNCTIONS
+
 clear
 figlet LSS RESTORE
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
@@ -335,16 +371,16 @@ select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
     Mount-Backup-Instead ) restic-mount ; exit;;
     esac
     done
-
+    echo "Restore finished."
+    restore-tidyup;
 else
 rsync-restore;
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
-rsync -avp $LSS_REPOSITORY $restoretargetdir
-
-####
-
+mkdir -p $restoretargetdir/LSS-RESTORE-$BKID 
+rsync -avp $LSS_REPOSITORY $restoretargetdir/LSS-RESTORE-$BKID
 echo "Restore finished."
+restore-tidyup;
 fi
 
 
