@@ -2,7 +2,7 @@ apt install figlet
 clear
 figlet LSS BACKUP
 echo "Installing necessary dependencies."
-apt-get install restic curl wget rsync -y
+apt-get install restic curl wget rsync cifs-utils -y
 echo "Updating restic to the latest version manually"
 restic self-update
 echo "Creating folders"
