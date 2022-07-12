@@ -31,7 +31,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 
-if [[ $RETENTYPE == 'FULL' ]]
+if [[ $RETENTION == 'YES-FULL' ]]
 then
 cp ./functions/lss-reten-full.sh ./database/backup-jobs/"$BKID"/$BKID-lss-reten-full.sh
 cp ./functions/lss-prune.sh ./database/backup-jobs/"$BKID"/$BKID-lss-prune.sh
@@ -40,8 +40,9 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 
 echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Last:$RETENLAST--KWD:$RETENDAILY--KWW:$RETENWEEKLY--KWM:$RETENMONTHLY--KWY:$RETENANNUAL |$WORKDIR/database/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
 
-else
-
+fi
+if [[ $RETENTION == 'YES-LAST' ]]
+then
 cp ./functions/lss-reten-keep-last-only.sh ./database/backup-jobs/"$BKID"/$BKID-lss-reten-keep-last-only.sh
 cp ./functions/lss-prune.sh ./database/backup-jobs/"$BKID"/$BKID-lss-prune.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-reten-keep-last-only.sh
