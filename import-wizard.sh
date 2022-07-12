@@ -39,12 +39,11 @@ if [ -f "$importfile" ]; then
     select importoverride in "YES" "NO"; do
     case $importoverride in
 
-        YES ) echo "./import-override.sh" ; break;;
+        YES ) echo "./import-override.sh This is still in development." ; break;;
 
 	    NO ) echo "Nothing to do, good bye." ; exit;;
     esac
     done
-    
     exit
     else
         mkdir -p ./database/backup-jobs/"$BKID"
