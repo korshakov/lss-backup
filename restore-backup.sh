@@ -155,6 +155,20 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
+rsync-restore ()
+{
+echo "Where would you like to restore files?"
+select restoreloctype in "LOCAL" "SMB" "NFS"; do
+    case $restoreloctype in
+
+        LOCAL ) localrestoremountfunction ; break;;
+
+        SMB ) smbrestoremountfunction ; break;;
+
+	NFS ) nfsrestoremountfunction ; exit;;
+    esac
+done
+
 echo "Would you like to restore latest or specify snapshot id?"
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
@@ -221,7 +235,7 @@ select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
     done
 
 else
-localrestoremountfunction;
+rsync-restore;
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
 rsync -avp $LSS_REPOSITORY $restoretargetdir
