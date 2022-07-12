@@ -1,6 +1,8 @@
 ### RESTIC IMPORT FUNCTION
 
 resticimport(){
+SETUPWORKDIR=$(pwd)
+TIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 cp ./functions/source-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 cp ./functions/local-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
 cp ./functions/smb-nfs-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
@@ -14,9 +16,6 @@ cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-d
 cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
-
-SETUPWORKDIR=$(pwd)
-TIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
