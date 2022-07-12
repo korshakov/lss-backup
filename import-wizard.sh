@@ -34,13 +34,23 @@ if [ -f "$importfile" ]; then
     # Checking if backup job already exist"
     if [ -d "./database/backup-jobs/"$BKID"" ];
     then
-    echo "Backup ID already taken! Exitting"
+    echo "Backup ID already taken! Would you like to override existing backup job?"
+    echo "Warning this can cause catastrphyc data loss if your import file contains incorrect values!"
+    select importoverride in "YES" "NO"; do
+    case $importoverride in
+
+        YES ) echo "./import-override.sh" ; break;;
+
+	    NO ) echo "Nothing to do, good bye." ; exit;;
+    esac
+    done
+    
     exit
     else
         mkdir -p ./database/backup-jobs/"$BKID"
         cp "$importfile" ./database/backup-jobs/"$BKID"/"$BKID-Configuration.env"
         if [[ $PROGRAM == 'RESTIC' ]]
-	   then
+	    then
         resticimport;
         else
         rsyncimport;
