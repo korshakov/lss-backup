@@ -2,6 +2,86 @@
 
 ######################### Functions start here
 
+### DESTINATION CHECKS
+restore-source-check () {
+echo "Checking if destination is SMB."
+if [[ $BKDESTTYPE == 'SMB' ]]
+then
+ echo "Checking if destination SMB is mounted!"
+ if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+	echo "SMB destination mountpoint is mounted."
+ else
+    echo "Warning! SMB destination share is not mounted! Trying to mount destination share as per config."
+    mkdir -p "/mnt/lss-backup/$BKID/destination"
+        if [[ -z "$DDOMAIN" ]]
+        then
+        	echo "No domain specified, using username & password only to login to //"$DMPTARGETIP"/"$DMPSN" share."
+        	mount -t cifs //"$DMPTARGETIP"/"$DMPSN" "/mnt/lss-backup/$BKID/destination" -o username="$DUSERNAME",password="$DPASSWORD"
+		echo "Checking if mount was succesfull"
+                if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+                echo "Destination mountpoint is now mounted as per config"
+                else
+                echo "Automatic mount of destination failed! Aborting restore!"
+                exit
+                fi
+
+        else
+        	echo "Domain has been specified, using username, password and domain to login to //$DMPTARGETIP/$DMPSN share."
+        	mount -t cifs //"$DMPTARGETIP"/"$DMPSN" "/mnt/lss-backup/$BKID/destination" -o username="$DUSERNAME",password="$DPASSWORD",domain="$DDOMAIN"
+		echo "Checking if mount was succesfull"
+		if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+        	echo "Destination mountpoint is now mounted as per config"
+		else
+        	echo "Automatic mount of destination failed! Aborting restore!"
+        	exit
+		fi
+
+	fi
+ fi
+else
+echo "Checking if destination is NFS."
+fi
+
+# NFS Source directory checks #
+if [[ $BKDESTTYPE == 'NFS' ]]
+then
+ echo "Checking if destination NFS is mounted!"
+ if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+        echo "NFS destination mountpoint is mounted."
+ else
+    echo "Warning! NFS destination share is not mounted! Trying to mount destination share as per config."
+    mkdir -p "/mnt/lss-backup/$BKID/destination"
+        if [[ -z "$DDOMAIN" ]]
+        then
+                echo "No domain specified, using username & password only to login to //"$DMPTARGETIP""$DMPSN" share."
+                mount -t nfs -O user="$DUSERNAME",pass="$DPASSWORD" "$DMPTARGETIP":/"$DMPSN" "/mnt/lss-backup/$BKID/destination"
+		echo "Checking if mount was succesfull"
+		if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+                echo "Destination mountpoint is now mounted as per config"
+                else
+                echo "Automatic mount of destination failed! Aborting restore!"
+                exit
+                fi
+
+        else
+                echo "Domain has been specified, using username, password and domain to login to //$DMPTARGETIP/$DMPSN share."
+                mount -t nfs -O user="$DUSERNAME",pass="$DPASSWORD",domain="$DDOMAIN" "$DMPTARGETIP":/"$DMPSN" "/mnt/lss-backup/$BKID/destination"
+                echo "Checking if mount was succesfull"
+                if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
+                echo "Destination mountpoint is now mounted as per config"
+                else
+                echo "Automatic mount of destination failed! Aborting restore!"
+                exit
+                fi
+
+        fi
+ fi
+else
+echo "Restore source was specified as SMB/NFS. Configuration file is not correct."
+fi
+}
+### END OF DESTINATION CHECKS
+
 ### SMB MOUNT FUNCTION
 
 smbrestoremountfunction ()
@@ -196,7 +276,12 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
 done
 }
 
-### END OF RSYNC RESTORE 
+### END OF RSYNC RESTORE
+
+### RESTORE TIDY UP
+
+
+### END OF RESTORE TIDY UP
 clear
 figlet LSS RESTORE
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
@@ -215,6 +300,7 @@ then
 # load backup job config file
 source ./database/backup-jobs/$BACKUPRESTOREID/$BACKUPRESTOREID-Configuration.env
 
+restore-source-check;
 
 if [[ $PROGRAM == 'RESTIC' ]]
 then
@@ -243,6 +329,9 @@ rsync-restore;
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
 rsync -avp $LSS_REPOSITORY $restoretargetdir
+
+####
+
 echo "Restore finished."
 fi
 
