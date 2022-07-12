@@ -17,7 +17,7 @@ cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-destination-type-checks.sh
@@ -105,21 +105,21 @@ SETUPWORKDIR=$(pwd)
 
 #create executable file for cronjob starter file.sh
 
-cp ./functions/source-type-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-source-type-checks.sh
-cp ./functions/local-source-folder-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-local-source-folder-checks.sh
-cp ./functions/smb-nfs-source-folder-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-smb-nfs-source-folder-checks.sh
-cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-destination-type-checks.sh
-cp ./functions/local-destination-folder-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-local-destination-folder-checks.sh
-cp ./functions/smb-nfs-destination-folder-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-smb-nfs-destination-folder-checks.sh
-cp ./functions/s3-destination-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-s3-destination-checks.sh
-cp ./functions/backup-config-check.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-backup-config-check.sh
-cp ./functions/repository-check.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-repository-check.sh
-cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-destination-type-checks.sh
-cp ./functions/cron-add.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
-cp ./functions/cron-remove.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
-cp ./functions/lss-backup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-backup.sh
+cp ./functions/source-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
+cp ./functions/local-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
+cp ./functions/smb-nfs-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
+cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-destination-type-checks.sh
+cp ./functions/local-destination-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-local-destination-folder-checks.sh
+cp ./functions/smb-nfs-destination-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-destination-folder-checks.sh
+cp ./functions/s3-destination-checks.sh ./database/backup-jobs/"$BKID"/$BKID-s3-destination-checks.sh
+cp ./functions/backup-config-check.sh ./database/backup-jobs/"$BKID"/$BKID-backup-config-check.sh
+cp ./functions/repository-check.sh ./database/backup-jobs/"$BKID"/$BKID-repository-check.sh
+cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-destination-type-checks.sh
+cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
+cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
+cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-destination-type-checks.sh
@@ -133,8 +133,8 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 
-cp ./functions/starter-script.sh ./database/backup-jobs/"$BKID"/"$BKID-$SETUPBKFQ-$SETUPBKNAME.sh"
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/"$BKID-$SETUPBKFQ-$SETUPBKNAME.sh"
+cp ./functions/starter-script.sh ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
 
 echo "Writing to simple database file"
 echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Not-available |$SETUPWORKDIR/database/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
