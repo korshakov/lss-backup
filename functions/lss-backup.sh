@@ -55,7 +55,7 @@ fi
 if [[ $PROGRAM == 'RSYNC' ]]
 then
 echo "Starting rsync process now!"
-if [[ $rsyncmode == 'NOPERMNOOWNNOGP' ]]
+if [[ $RSYNCMODE == 'NOPERMNOOWNNOGP' ]]
 then
 rsync -avp --no-perms --no-owner --no-group $SDIR $LSS_REPOSITORY
 else
