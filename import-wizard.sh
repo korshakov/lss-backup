@@ -98,7 +98,7 @@ fi
 
 ### RSYNC IMPORT FUNCTION
 
-resticimport(){
+rsyncimport(){
 
 SETUPWORKDIR=$(pwd)
 
@@ -150,7 +150,6 @@ clear
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
 else
 echo "Good bye!"
-fi
 fi
 
 }
