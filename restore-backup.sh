@@ -39,13 +39,13 @@ then
 	fi
  fi
 else
-echo "Checking if destination is NFS."
+echo "Checking if source to restore is NFS."
 fi
 
 # NFS Source directory checks #
 if [[ $BKDESTTYPE == 'NFS' ]]
 then
- echo "Checking if source to restore  NFS is mounted!"
+ echo "Checking if source to restore NFS is mounted!"
  if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
         echo "NFS source to restore mountpoint is mounted."
  else
@@ -77,8 +77,20 @@ then
         fi
  fi
 else
-echo "Restore source was specified as SMB/NFS, but configuration file is not correct."
+echo "Checking if source to restore is LOCAL."
 fi
+
+if [[ $BKDESTTYPE == 'LOCAL' ]]
+then
+echo "Source to restore is LOCAL. Nothing to mount."
+fi
+
+if [[ $BKDESTTYPE == 'S3' ]]
+then
+echo "Source to restore is S3. Nothing to mount."
+fi
+
+
 }
 ### END OF DESTINATION CHECKS
 
