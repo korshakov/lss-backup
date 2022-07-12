@@ -1,20 +1,18 @@
 clear
-figlet LSS BACKUP
+figlet LSS IMPORT
 echo "Copyright - Ladislav Stojanik - LS Solutions - https://lssolutions.ie"
 echo "#####################################################################"
 echo ""
-echo "Which program would you like to use? Type RESTIC or RSYNC pres CTRL+C to exit program."
-read PROGRAM
-if [[ $PROGRAM == 'RESTIC' ]]
-then
-clear
-./restic.sh
-exit
+echo "Where is your .env file located. Make sure its an absolute path. Example: /etc/backups/myfile.env"
+read importfile
+
+
+
+if [ -f "$importfile" ]; then
+    echo "$importfile exists. Reading file now."
+else 
+    echo "$importfile does not exist. Try again!"
+    echo "Import wizard will start over in 5 seconds. Quit by pressing CTRL+C"
+    sleep 5s
+    ./import-wizard.sh
 fi
-if [[ $PROGRAM == 'RSYNC' ]]
-then
-clear
-./rsync.sh
-exit
-fi
-./backup-wizard.sh
