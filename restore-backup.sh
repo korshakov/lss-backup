@@ -319,7 +319,7 @@ select restorecleanup in "YES" "NO"; do
 
         YES ) restoredestumount ; break;;
 
-        NO ) echo "Nothing to do." ; exit;;
+        NO ) echo "Nothing to do." ; break;;
 
     esac
 done
@@ -371,16 +371,16 @@ select snapshotrestoretype in "Restore-All-Data" "Mount-Backup-Instead"; do
     Mount-Backup-Instead ) restic-mount ; exit;;
     esac
     done
-    echo "Restore finished."
     restore-tidyup;
+    echo "Restore finished."
 else
 rsync-restore;
 echo "Restoring data using rsync. This may take some time depending how much data you are about to restore."
 echo "Restoring data to to $restoretargetdir"
 mkdir -p $restoretargetdir/LSS-RESTORE-$BKID 
 rsync -avp $LSS_REPOSITORY $restoretargetdir/LSS-RESTORE-$BKID
-echo "Restore finished."
 restore-tidyup;
+echo "Restore finished."
 fi
 
 
