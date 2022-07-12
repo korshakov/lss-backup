@@ -248,8 +248,8 @@ mkdir -p $restoretargetdir/LSS-RESTORE-$BKID
 echo "Would you like to restore latest or specify snapshot id?"
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
-    LATEST ) echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir/LSS-RESTORE-$BKID"; echo "Restore finished."  ; break;;
-    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir/LSS-RESTORE-$BKID"; echo "Restore finished." ; exit;;
+    LATEST ) echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore latest --target "$restoretargetdir/LSS-RESTORE-$BKID"; restore-tidyup; echo "Restore finished."  ; break;;
+    SPECIFY-ID ) echo "Input your restic snapshot ID."; read resticsnapshotid; echo "Restoring data to $restoretargetdir."; restic -r $LSS_REPOSITORY restore "$resticsnapshotid" --target "$restoretargetdir/LSS-RESTORE-$BKID"; restore-tidyup; echo "Restore finished." ; exit;;
     esac
 done
 }
