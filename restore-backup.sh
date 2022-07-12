@@ -4,14 +4,14 @@
 
 ### DESTINATION CHECKS
 restore-source-check () {
-echo "Checking if destination is SMB."
+echo "Checking if source to restore is SMB."
 if [[ $BKDESTTYPE == 'SMB' ]]
 then
- echo "Checking if destination SMB is mounted!"
+ echo "Checking if source to restore SMB is mounted!"
  if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-	echo "SMB destination mountpoint is mounted."
+	echo "SMB source to restore mountpoint is mounted."
  else
-    echo "Warning! SMB destination share is not mounted! Trying to mount destination share as per config."
+    echo "Warning! SMB source to restore  share is not mounted! Trying to mount source to restore share as per config."
     mkdir -p "/mnt/lss-backup/$BKID/destination"
         if [[ -z "$DDOMAIN" ]]
         then
@@ -19,9 +19,9 @@ then
         	mount -t cifs //"$DMPTARGETIP"/"$DMPSN" "/mnt/lss-backup/$BKID/destination" -o username="$DUSERNAME",password="$DPASSWORD"
 		echo "Checking if mount was succesfull"
                 if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-                echo "Destination mountpoint is now mounted as per config"
+                echo "Source to restore mountpoint is now mounted as per config"
                 else
-                echo "Automatic mount of destination failed! Aborting restore!"
+                echo "Automatic mount of source to restore failed! Aborting restore!"
                 exit
                 fi
 
@@ -30,9 +30,9 @@ then
         	mount -t cifs //"$DMPTARGETIP"/"$DMPSN" "/mnt/lss-backup/$BKID/destination" -o username="$DUSERNAME",password="$DPASSWORD",domain="$DDOMAIN"
 		echo "Checking if mount was succesfull"
 		if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-        	echo "Destination mountpoint is now mounted as per config"
+        	echo "Source to restore  mountpoint is now mounted as per config"
 		else
-        	echo "Automatic mount of destination failed! Aborting restore!"
+        	echo "Automatic mount of source to restore failed! Aborting restore!"
         	exit
 		fi
 
@@ -45,11 +45,11 @@ fi
 # NFS Source directory checks #
 if [[ $BKDESTTYPE == 'NFS' ]]
 then
- echo "Checking if destination NFS is mounted!"
+ echo "Checking if source to restore  NFS is mounted!"
  if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-        echo "NFS destination mountpoint is mounted."
+        echo "NFS source to restore mountpoint is mounted."
  else
-    echo "Warning! NFS destination share is not mounted! Trying to mount destination share as per config."
+    echo "Warning! NFS source to restore share is not mounted! Trying to mount source to restore share as per config."
     mkdir -p "/mnt/lss-backup/$BKID/destination"
         if [[ -z "$DDOMAIN" ]]
         then
@@ -57,9 +57,9 @@ then
                 mount -t nfs -O user="$DUSERNAME",pass="$DPASSWORD" "$DMPTARGETIP":/"$DMPSN" "/mnt/lss-backup/$BKID/destination"
 		echo "Checking if mount was succesfull"
 		if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-                echo "Destination mountpoint is now mounted as per config"
+                echo "Source to restore mountpoint is now mounted as per config"
                 else
-                echo "Automatic mount of destination failed! Aborting restore!"
+                echo "Automatic mount of source to restore failed! Aborting restore!"
                 exit
                 fi
 
@@ -68,16 +68,16 @@ then
                 mount -t nfs -O user="$DUSERNAME",pass="$DPASSWORD",domain="$DDOMAIN" "$DMPTARGETIP":/"$DMPSN" "/mnt/lss-backup/$BKID/destination"
                 echo "Checking if mount was succesfull"
                 if mount | grep "/mnt/lss-backup/$BKID/destination" > /dev/null; then
-                echo "Destination mountpoint is now mounted as per config"
+                echo "Source to restore mountpoint is now mounted as per config"
                 else
-                echo "Automatic mount of destination failed! Aborting restore!"
+                echo "Automatic mount of source to restore failed! Aborting restore!"
                 exit
                 fi
 
         fi
  fi
 else
-echo "Restore source was specified as SMB/NFS. Configuration file is not correct."
+echo "Restore source was specified as SMB/NFS, but configuration file is not correct."
 fi
 }
 ### END OF DESTINATION CHECKS
