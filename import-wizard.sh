@@ -138,7 +138,7 @@ cp ./functions/starter-script.sh ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BK
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
 
 echo "Writing to simple database file"
-echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Not-available |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$BKID |$TIMESTAMP |$BKNAME |RSYNC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Not-available |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
 
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-cron-add.sh
 
