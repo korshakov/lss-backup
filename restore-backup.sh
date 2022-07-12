@@ -155,20 +155,6 @@ select restoreloctype in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
-rsync-restore ()
-{
-echo "Where would you like to restore files?"
-select restoreloctype in "LOCAL" "SMB" "NFS"; do
-    case $restoreloctype in
-
-        LOCAL ) localrestoremountfunction ; break;;
-
-        SMB ) smbrestoremountfunction ; break;;
-
-	NFS ) nfsrestoremountfunction ; exit;;
-    esac
-done
-
 echo "Would you like to restore latest or specify snapshot id?"
 select snapshotchoice in "LATEST" "SPECIFY-ID"; do
     case $snapshotchoice in
@@ -193,6 +179,24 @@ echo "Mounting snapshot data to $restoretargetdir."; restic -r $LSS_REPOSITORY m
 }
 
 ### END OF RESTIC MOUNT SNAPSHOT FUNCTION
+
+## RSYNC RESTORE FUNCTION
+rsync-restore ()
+{
+echo "Where would you like to restore files?"
+select restoreloctype in "LOCAL" "SMB" "NFS"; do
+    case $restoreloctype in
+
+        LOCAL ) localrestoremountfunction ; break;;
+
+        SMB ) smbrestoremountfunction ; break;;
+
+	NFS ) nfsrestoremountfunction ; exit;;
+    esac
+done
+}
+
+### END OF RSYNC RESTORE 
 clear
 figlet LSS RESTORE
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
