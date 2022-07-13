@@ -397,12 +397,12 @@ nobackuprun (){
 
 echo "It is important to at least initialize restic repository otherwise scheduled cron will time out and send failed ping."
 echo "Are you 100% sure that you want to even skip restic repository initialization?"
-select NOBACKUPRUNCONFIRM in "YES" "NO" ; do
+select NOBACKUPRUNCONFIRM in "YES - I WILL RUN INIT LATER" "NO - RUN INIT NOW" ; do
     case $NOBACKUPRUNCONFIRM in
 
-        YES - I WILL RUN INIT LATER ) runinitlater ; break;;
+        "YES - I WILL RUN INIT LATER" ) runinitlater ; break;;
 
-        NO - RUN INIT NOW ) runinitnow ; break;;
+        "NO - RUN INIT NOW" ) runinitnow ; break;;
 
     esac
 done
