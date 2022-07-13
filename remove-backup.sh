@@ -4,8 +4,11 @@ if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "List of backup(s):"
 ls database/backup-jobs/
 echo "--------------------------------"
-echo "Input backup ID you wish to destroy or press CTRL+C to cancel this process without destroying any backups."
-read BKDESTROY
+BKDESTROY=
+while [[ $BKDESTROY = "" ]]; do
+   echo "Input backup ID you wish to destroy or press CTRL+C to cancel this process without destroying any backups."
+   read BKDESTROY
+done
 
 # Checking if backup job already exist
 if [ -d "./database/backup-jobs/$BKDESTROY" ];
