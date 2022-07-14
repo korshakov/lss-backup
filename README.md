@@ -9,6 +9,7 @@ wget https://github.com/korshakov/lss-backup/archive/refs/tags/v2.3.tar.gz
 ```
 ```
 tar -xvf v2.3.tar.gz
+rm v2.3.tar.gz
 mv lss-backup-2.3 lss-backup
 cd lss-backup
 chmod +x *.sh
