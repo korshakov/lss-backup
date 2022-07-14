@@ -69,7 +69,7 @@ echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRO
 ### LOCAL SOURCE FUNCTION
 
 localsourcefunction () {
-
+BKSOURCETYPE=LOCAL
 echo "BKSOURCETYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### LOCAL SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -84,7 +84,7 @@ echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Config
 ### SMB SOURCE FUNCTION
 
 smbsourcefunction (){
-
+BKSOURCETYPE=SMB
 echo "BKSOURCETYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### SMB SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -119,7 +119,7 @@ echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 ### NFS SOURCE FUNCTION
 
 nfssourcefunction (){
-
+BKSOURCETYPE=NFS
 echo "BKSOURCETYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### NFS SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -156,7 +156,7 @@ echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 ### LOCAL DESTINATION FUNCTION
 
 localdestfunction (){
-
+BKDESTTYPE=LOCAL
 echo "BKDESTTYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### LOCAL DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -171,7 +171,7 @@ echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME" >>
 ### SMB DESTINATION FUNCTION
 
 smbdestfunction (){
-
+BKDESTTYPE=SMB
 echo "BKDESTTYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### SMB DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -204,7 +204,7 @@ echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-
 ### END OF SMB DESTINATION FUNCTION
 
 ### NFS DESTINATION FUNCTION
-
+BKDESTTYPE=NFS
 nfsdestfunction (){
 echo "BKDESTTYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
@@ -369,7 +369,7 @@ cp ./functions/starter-script.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 
 echo "Writing to simple database file"
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |Not-available |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Not-available |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 echo "Injecting crontab."
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-cron-add.sh
 
