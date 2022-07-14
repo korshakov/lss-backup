@@ -1,4 +1,246 @@
 ##!/bin/bash
+
+###### FUNCTIONS STARTS HERE
+### DAILY FUNCTION
+
+dailyfunction (){
+
+echo "BKFQ=Daily" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which hour of each day should backup start? In 24H format. Example: 19"
+read SETUPBKCRONTIMEHH
+echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which minute of the hour $SETUPBKCRONTIMEHH should backup start? Example: 30"
+read SETUPBKCRONTIMEMM
+echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Your backup will run daily at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
+}
+
+### END OF DAILY FUNCTION
+
+### WEEKLY FUNCTION
+
+weeklyfunction (){
+
+echo "BKFQ=Weekly" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which day should weekly backup start? Example: 1 That means it will run every Monday."
+read SETUPBKCRONWEEKLY
+echo "BKCRONWEEKLY=$SETUPBKCRONWEEKLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "What hour on the day of $SETUPBKCRONWEEKLY should backup start? In 24H format. Example: 19"
+read SETUPBKCRONTIMEHH
+echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which minute of the hour specified before should backup start? Example: 30"
+read SETUPBKCRONTIMEMM
+echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Your backup will run weekly on the day $SETUPBKCRONWEEKLY at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
+}
+
+### END OF WEEKLY FUNCTION
+
+### MONTHLY FUNCTION
+
+monthlyfunction (){
+
+echo "BKFQ=Monthly" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which day should monthly backup start? Example: 1 That means it will run on first day of every month."
+read SETUPBKCRONMONTHLY
+echo "BKCRONMONTHLY=$SETUPBKCRONMONTHLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which hour on the day $SETUPBKCRONWEEKLY of a month  should backup start? In 24H format. Example: 19"
+read SETUPBKCRONTIMEHH
+echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Which minute of the hour specified before should backup start? Example: 30"
+read SETUPBKCRONTIMEMM
+echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
+}
+
+### END OF MONTHLY FUNCTION
+
+### LOCAL SOURCE FUNCTION
+
+localsourcefunction () {
+
+echo "BKSOURCETYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### LOCAL SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "What is your LOCAL source directory? Example: /home/user/some-files"
+read SETUPSDIR
+echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF LOCAL SOURCE FUNCTION
+
+### SMB SOURCE FUNCTION
+
+smbsourcefunction (){
+
+echo "BKSOURCETYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### SMB SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "Source target IP address?"
+read SETUPMPTARGETIP
+echo "MPTARGETIP=$SETUPMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Share name? Please make sure there are no spaces!"
+read SETUPMPSN
+echo "MPSN=$SETUPMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+SETUPSDIR="/mnt/lss-backup/$SETUPBKID/source"
+echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Credentials"
+echo "Username?"
+read SETUPUSERNAME
+echo "USERNAME=$SETUPUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Password?"
+read SETUPPASSWORD
+echo "PASSWORD=$SETUPPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Domain? Leave empty if not joined to domain."
+read SETUPDOMAIN
+echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF SMB SOURCE FUNCTION
+
+### NFS SOURCE FUNCTION
+
+nfssourcefunction (){
+
+echo "BKSOURCETYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### NFS SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "Source target IP address?"
+read SETUPMPTARGETIP
+echo "MPTARGETIP=$SETUPMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Share name? Please make sure there are no spaces!"
+read SETUPMPSN
+echo "MPSN=$SETUPMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+#echo "Mountpoint directory where your source should be mounted? Example: /mnt/smb/source"
+#read SETUPMP
+SETUPSDIR="/mnt/lss-backup/$SETUPBKID/source"
+echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Credentials."
+echo "Username?"
+read SETUPUSERNAME
+echo "SETUPUSERNAME=$SETUPUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Password?"
+read SETUPPASSWORD
+echo "PASSWORD=$SETUPPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Domain? Leave empty if not joined to domain."
+read SETUPDOMAIN
+echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF NFS SOURCE FUNCTION
+
+### LOCAL DESTINATION FUNCTION
+
+localdestfunction (){
+
+echo "BKDESTTYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### LOCAL DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "What is your LOCAL destination directory? Example: /home/user/my-backup-files"
+read SETUPLSS_REPOSITORY
+echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF LOCAL DESTINATION FUNCTION
+
+### SMB DESTINATION FUNCTION
+
+smbdestfunction (){
+
+echo "BKDESTTYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### SMB DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "Destination target IP address?"
+read SETUPDMPTARGETIP
+echo "DMPTARGETIP=$SETUPDMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Share name? Please make sure there are no spaces!"
+read SETUPDMPSN
+echo "DMPSN=$SETUPDMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+SETUPLSS_REPOSITORY="/mnt/lss-backup/$SETUPBKID/destination/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME"
+echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Credentials"
+echo "Username?"
+read SETUPDUSERNAME
+echo "DUSERNAME=$SETUPDUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Password?"
+read SETUPDPASSWORD
+echo "DPASSWORD=$SETUPDPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Domain? Leave empty if not joined to domain."
+read SETUPDDOMAIN
+echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF SMB DESTINATION FUNCTION
+
+### NFS DESTINATION FUNCTION
+
+nfsdestfunction (){
+echo "BKDESTTYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "### NFS DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "Destination target IP address?"
+read SETUPDMPTARGETIP
+echo "DMPTARGETIP=$SETUPDMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Share name? Please make sure there are no spaces!"
+read SETUPDMPSN
+echo "DMPSN=$SETUPDMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+#echo "Mountpoint directory where your destination should be mounted? Example: /mnt/smb/source"
+#read SETUPDMP
+SETUPLSS_REPOSITORY="/mnt/lss-backup/$SETUPBKID/destination/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME"
+echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Credentials"
+echo "Username?"
+read SETUPDUSERNAME
+echo "DUSERNAME=$SETUPDUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Password?"
+read SETUPDPASSWORD
+echo "DPASSWORD=$SETUPDPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Domain? Leave empty if not joined to domain."
+read SETUPDDOMAIN
+echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF NFS DESTINATION FUNCTION
+
+###### MAIN CODE STARTS HERE
+
 figlet LSS RSYNC
 echo "Give your backup job an ID, usually numbers would be the best."
 echo "Please note that backup ID is taken as a unique identifier! Avoid simple number but rather something more complex. Example CUS01"
@@ -72,211 +314,50 @@ echo "Set your backup frequency. Use only Daily, Weekly, Monthly"
 read SETUPBKFQ
 echo "BKFQ=$SETUPBKFQ" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-if [[ $SETUPBKFQ == 'Daily' ]]
-then
-echo "Which hour of each day should backup start? In 24H format. Example: 19"
-read SETUPBKCRONTIMEHH
-echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "Set your backup frequency."
+select SETUPBKFQ in "Daily" "Weekly" "Monthly"; do
+    case $SETUPBKFQ in
 
-echo "Which minute of the hour $SETUPBKCRONTIMEHH should backup start? Example: 30"
-read SETUPBKCRONTIMEMM
-echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+        Daily ) dailyfunction ; break;;
 
-echo "Your backup will run daily at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
-fi
+        Weekly ) weeklyfunction ; break;;
+        
+        Monthly ) monthlyfunction ; break;;
 
-if [[ $SETUPBKFQ == 'Weekly' ]]
-then
-
-echo "Which day should weekly backup start? Example: 1 That means it will run every Monday."
-read SETUPBKCRONWEEKLY
-echo "BKCRONWEEKLY=$SETUPBKCRONWEEKLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "What hour on the day of $SETUPBKCRONWEEKLY should backup start? In 24H format. Example: 19"
-read SETUPBKCRONTIMEHH
-echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "Which minute of the hour specified before should backup start? Example: 30"
-read SETUPBKCRONTIMEMM
-echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "Your backup will run weekly on the day $SETUPBKCRONWEEKLY at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
-fi
-
-if [[ $SETUPBKFQ == 'Monthly' ]]
-then
-
-echo "Which day should monthly backup start? Example: 1 That means it will run on first day of every month."
-read SETUPBKCRONMONTHLY
-echo "BKCRONMONTHLY=$SETUPBKCRONMONTHLY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "Which hour on the day $SETUPBKCRONWEEKLY of a month  should backup start? In 24H format. Example: 19"
-read SETUPBKCRONTIMEHH
-echo "BKCRONTIMEHH=$SETUPBKCRONTIMEHH" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "Which minute of the hour specified before should backup start? Example: 30"
-read SETUPBKCRONTIMEMM
-echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
-fi
-
-if [[ $SETUPBKFQ != 'Daily' ]] && [[ $SETUPBKFQ != 'Weekly' ]] && [[ $SETUPBKFQ != 'Monthly' ]]
-then
-echo "Your backup frequency is not matching either Daily, Weekly or Monthly! Exitting."
-rm -rf ./database/backup-jobs/$SETUPBKID
-exit
-fi
+    esac
+done
 
 echo "### SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "What is your backup source type? Either LOCAL, SMB or NFS."
-read SETUPBKSOURCETYPE
-echo "BKSOURCETYPE=$SETUPBKSOURCETYPE" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
+    case $SETUPBKSOURCETYPE in
 
-	if [[ $SETUPBKSOURCETYPE == 'LOCAL' ]]
-	then
-	echo "### LOCAL SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "What is your LOCAL source directory? Example: /home/user/some-files"
-	read SETUPSDIR
-	echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+        LOCAL) localsourcefunction ; break;;
 
-	fi
+        SMB ) smbsourcefunction ; break;;
+        
+        NFS ) nfssourcefunction ; break;;
 
-	if [[ $SETUPBKSOURCETYPE == 'SMB' ]]
-	then
-	echo "### SMB SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "Source target IP address?"
-	read SETUPMPTARGETIP
-	echo "MPTARGETIP=$SETUPMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+    esac
+done
 
-	echo "Share name? Please make sure there are no spaces!"
-	read SETUPMPSN
-	echo "MPSN=$SETUPMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-	#echo "Mountpoint directory where your source should be mounted? Example: /mnt/smb/source"
-	#read SETUPMP
-	SETUPSDIR="/mnt/lss-backup/$SETUPBKID/source"
-	echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Credentials"
-	echo "Username?"
-	read SETUPUSERNAME
-	echo "USERNAME=$SETUPUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Password?"
-	read SETUPPASSWORD
-	echo "PASSWORD=$SETUPPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Domain? Leave empty if not joined to domain."
-	read SETUPDOMAIN
-	echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	fi
-
-	if [[ $SETUPBKSOURCETYPE == 'NFS' ]]
-	then
-	echo "### NFS SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "Source target IP address?"
-        read SETUPMPTARGETIP
-        echo "MPTARGETIP=$SETUPMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-        echo "Share name? Please make sure there are no spaces!"
-        read SETUPMPSN
-        echo "MPSN=$SETUPMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-        #echo "Mountpoint directory where your source should be mounted? Example: /mnt/smb/source"
-        #read SETUPMP
-        SETUPSDIR="/mnt/lss-backup/$SETUPBKID/source"
-	echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-        echo "Credentials."
-        echo "Username?"
-        read SETUPUSERNAME
-        echo "SETUPUSERNAME=$SETUPUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-        echo "Password?"
-        read SETUPPASSWORD
-        echo "PASSWORD=$SETUPPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-        echo "Domain? Leave empty if not joined to domain."
-        read SETUPDOMAIN
-        echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	fi
 
 echo "### DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "What is your destination source type? Either LOCAL, SMB or NFS"
-read SETUPBKDESTTYPE
-echo "BKDESTTYPE=$SETUPBKDESTTYPE" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "What is your destination source type? Either LOCAL, SMB, NFS or S3."
+select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS" "S3"; do
+    case $SETUPBKSOURCETYPE in
 
-	if [[ $SETUPBKDESTTYPE == 'LOCAL' ]]
-	then
-	echo "### LOCAL DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "What is your LOCAL destination directory? Example: /home/user/my-backedup-files"
-	read SETUPLSS_REPOSITORY
-	echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+        LOCAL) localdestfunction ; break;;
 
-	fi
+        SMB ) smbdestfunction ; break;;
+        
+        NFS ) nfsdestfunction ; break;;
 
-	if [[ $SETUPBKDESTTYPE == 'SMB' ]]
-	then
-	echo "### SMB DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "Destination target IP address?"
-	read SETUPDMPTARGETIP
-	echo "DMPTARGETIP=$SETUPDMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Share name? Please make sure there are no spaces!"
-	read SETUPDMPSN
-	echo "DMPSN=$SETUPDMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	SETUPLSS_REPOSITORY="/mnt/lss-backup/$SETUPBKID/destination/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME"
-	echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Credentials"
-	echo "Username?"
-	read SETUPDUSERNAME
-	echo "DUSERNAME=$SETUPDUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Password?"
-	read SETUPDPASSWORD
-	echo "DPASSWORD=$SETUPDPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Domain? Leave empty if not joined to domain."
-	read SETUPDDOMAIN
-	echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-  	fi
-
-	if [[ $SETUPBKDESTTYPE == 'NFS' ]]
-	then
-	echo "### NFS DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-	echo "Destination target IP address?"
-	read SETUPDMPTARGETIP
-	echo "DMPTARGETIP=$SETUPDMPTARGETIP" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Share name? Please make sure there are no spaces!"
-	read SETUPDMPSN
-	echo "DMPSN=$SETUPDMPSN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	SETUPLSS_REPOSITORY="/mnt/lss-backup/$SETUPBKID/destination/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME"
-	echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Credentials"
-	echo "Username?"
-	read SETUPDUSERNAME
-	echo "DUSERNAME=$SETUPDUSERNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Password?"
-	read SETUPDPASSWORD
-	echo "DPASSWORD=$SETUPDPASSWORD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-	echo "Domain? Leave empty if not joined to domain."
-	read SETUPDDOMAIN
-	echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
-  	fi
+    esac
+done
 
 echo "What is your healthchecks url? Example: https://cron.lssolutions.ie"
 read SETUPCRONDOMAIN
@@ -296,14 +377,15 @@ echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$SETUPBKSOURCETYPE-to-$
 echo "Injecting crontab."
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-cron-add.sh
 
-echo "Wizard is now finished. Would you like to run backup now? (y=yes/n=no)"
-read RUNBACKUP
+echo "Wizard is now finished. Would you like to run backup now?"
 
-if [[ $RUNBACKUP == 'y' ]]
-then
-clear
-/bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
-else
-echo "Good bye!"
-fi
+select RUNBACKUP in "YES" "NO" ; do
+    case $RUNBACKUP in
+
+        YES) /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh" ; break;;
+
+        NO ) echo "Good bye!" ; exit;;
+
+    esac
+done
 fi
