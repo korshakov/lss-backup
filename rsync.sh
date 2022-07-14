@@ -310,10 +310,6 @@ echo "Name your backup e.g. Sage-Backup-TO-LS-CLOUD Important! Spaces are not al
 read SETUPBKNAME
 echo "BKNAME=$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "Set your backup frequency. Use only Daily, Weekly, Monthly"
-read SETUPBKFQ
-echo "BKFQ=$SETUPBKFQ" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
 echo "Set your backup frequency."
 select SETUPBKFQ in "Daily" "Weekly" "Monthly"; do
     case $SETUPBKFQ in
@@ -347,7 +343,7 @@ done
 echo "### DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "What is your destination source type? Either LOCAL, SMB, NFS or S3."
-select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS" "S3"; do
+select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
     case $SETUPBKSOURCETYPE in
 
         LOCAL) localdestfunction ; break;;
