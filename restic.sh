@@ -70,7 +70,7 @@ echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRO
 ### LOCAL SOURCE FUNCTION
 
 localsourcefunction () {
-
+BKSOURCETYPE=LOCAL
 echo "BKSOURCETYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### LOCAL SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -85,7 +85,7 @@ echo "SDIR=$SETUPSDIR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Config
 ### SMB SOURCE FUNCTION
 
 smbsourcefunction (){
-
+BKSOURCETYPE=SMB
 echo "BKSOURCETYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### SMB SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -120,7 +120,7 @@ echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 ### NFS SOURCE FUNCTION
 
 nfssourcefunction (){
-
+BKSOURCETYPE=NFS
 echo "BKSOURCETYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### NFS SOURCE VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -157,7 +157,7 @@ echo "DOMAIN=$SETUPDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 ### LOCAL DESTINATION FUNCTION
 
 localdestfunction (){
-
+BKDESTTYPE=LOCAL
 echo "BKDESTTYPE=LOCAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### LOCAL DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -172,7 +172,7 @@ echo "LSS_REPOSITORY=$SETUPLSS_REPOSITORY/$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME" >>
 ### SMB DESTINATION FUNCTION
 
 smbdestfunction (){
-
+BKDESTTYPE=SMB
 echo "BKDESTTYPE=SMB" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### SMB DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
@@ -205,7 +205,7 @@ echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-
 ### END OF SMB DESTINATION FUNCTION
 
 ### NFS DESTINATION FUNCTION
-
+BKDESTTYPE=NFS
 nfsdestfunction (){
 echo "BKDESTTYPE=NFS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
@@ -243,7 +243,7 @@ echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-
 ### S3 DESTINATION FUNCTION
 
 s3destfunction (){
-
+BKDESTTYPE=S3
 echo "BKDESTTYPE=S3" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "### S3 DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
