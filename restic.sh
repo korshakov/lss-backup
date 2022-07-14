@@ -297,7 +297,7 @@ echo "How many annual backups to keep? Example: 2y means 2 years."
 read SETUPRETENANNUAL
 echo "RESTIC_FORGETANNUAL=$SETUPRETENANNUAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Last:$SETUPRETENLAST--KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Last:$SETUPRETENLAST--KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 
 
 }
@@ -318,7 +318,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 echo "How many last (most recent) backups to keep? Enter a numeric number. Example: 7"
 read SETUPRETENLAST
 echo "RESTIC_FORGETLAST=$SETUPRETENLAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Last-only:$SETUPRETENLAST |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Last-only:$SETUPRETENLAST |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 
 
 }
@@ -357,7 +357,7 @@ echo "No retention policy will be specified."
 echo "RETENTION=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 cp ./functions/lss-no-reten.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Not-set |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Not-set |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
 
 }
 
