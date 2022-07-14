@@ -8,6 +8,7 @@ restic self-update
 echo "Creating folders"
 mkdir -p /mnt/lss-backup
 echo "Done"
+rm ./database/backup-jobs/readme.txt
 
 SETUPWORKDIR=$(pwd)
 cp $SETUPWORKDIR/prep-dependencies/list-config-job-variables.sh.prep $SETUPWORKDIR/prep-dependencies/list-config-job-variables.sh
