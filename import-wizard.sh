@@ -38,7 +38,7 @@ cp ./functions/lss-prune.sh ./database/backup-jobs/"$BKID"/$BKID-lss-prune.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-reten-full.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-prune.sh
 
-echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Last:$RETENLAST--KWD:$RETENDAILY--KWW:$RETENWEEKLY--KWM:$RETENMONTHLY--KWY:$RETENANNUAL |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Last:$RESTIC_FORGETLAST--KWD:$RESTIC_FORGETDAILY--KWW:$RESTIC_FORGETWEEKLY--KWM:$RESTIC_FORGETMONTHLY--KWY:$RESTIC_FORGETANNUAL |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
 
 fi
 if [[ $RETENTION == 'YES-LAST' ]]
@@ -49,7 +49,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-prune.sh
 
 
-echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Last-only:$RETENLAST |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
+echo "|$BKID |$TIMESTAMP |$BKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$BKFQ |Last-only:$RESTIC_FORGETLAST |/backup-jobs/$BKID/$BKID-Configuration.env " >> ./database/backup-database.txt
 
 fi
 
