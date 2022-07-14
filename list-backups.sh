@@ -6,14 +6,16 @@ echo "List of backup(s):"
 echo "--------------------------------"
 column -t ./database/backup-database.txt
 echo "--------------------------------"
-echo "Would you like to view backup .env file? (y=Yes,n=No)"
-read OPENENVFILE
-	if [[ $OPENENVFILE == 'y' ]]
-	then
-	./functions/list-config-job-variables.sh
-	else
-	exit
-	fi
+echo "Would you like to view backup .env file?"
+select OPENENVFILE in "Yes" "No" ; do
+    case $OPENENVFILE in
+
+        "Yes" ) ./functions/list-config-job-variables.sh ; break;;
+
+        "No" ) exit ; break;;
+
+    esac
+done
 else
 echo "There are no backups to list!"
 fi

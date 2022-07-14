@@ -538,10 +538,6 @@ select SETUPRETENCONFIRM in "YES" "NO" ; do
     esac
 done
 
-#############################################################################################################################
-
-
-
 echo "Input your restic repository password! You MUST store it securely somewhere else! Avoid using special characters which would break Linux!"
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
