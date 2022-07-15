@@ -5,7 +5,9 @@ LOG_FILE=$WORKDIR/logs/$TIME-$BKID.log
 # Actual data backup process start here With signaling failures if any!.
 if [[ $PROGRAM == 'RESTIC' ]]
 then
-echo "Starting restic process now!"
+START_TIME=$SECONDS
+TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
+echo "Starting restic process at $TIMERTIMESTAMP"
 restic -r $LSS_REPOSITORY backup $SDIR -v
 RESTICCODE="$?"
 if [[ $RESTICCODE != '0' ]]
@@ -28,9 +30,12 @@ then
     wget "$CRONDOMAIN"/ping/"$CRONID"/39 -T 10 -t 5 -O /dev/null
     fi
 else
-figlet LSS RESTIC
+figlet LSS RESTIC 
 echo "-----------------------------------"
 echo "Restic backup finished succesfully."
+ELAPSED_TIME=$(($SECONDS - $START_TIME))
+echo "Restic backup took: $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+echo "-----------------------------------"
 ##############################################
 
 if [[ $RETENTION == 'YES-FULL' ]]
@@ -56,7 +61,9 @@ fi
 
 if [[ $PROGRAM == 'RSYNC' ]]
 then
-echo "Starting rsync process now!"
+START_TIME=$SECONDS
+TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
+echo "Starting rsync process at $TIMERTIMESTAMP"
 if [[ $RSYNCMODE == 'NOPERMNOOWNNOGP' ]]
 then
 rsync -avp --no-perms --no-owner --no-group $SDIR $LSS_REPOSITORY
@@ -172,6 +179,9 @@ else
 figlet LSS RSYNC
 echo "----------------------------------"
 echo "Rsync backup finished succesfully!"
+ELAPSED_TIME=$(($SECONDS - $START_TIME))
+echo "Rsync backup took: $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+echo "-----------------------------------"
 /bin/bash "$WORKDIR"/"$BKID"-log-cleanup.sh
 fi
 fi
