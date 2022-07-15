@@ -7,3 +7,4 @@ find $WORKDIR/logs/* -type f -mmin +20160
 echo "Deleting selected files older than 2 weeks from above list."
 find $LOGDIR/* -type f -mmin +20160 -exec rm {} \;
 echo "Done"
+wget "$CRONDOMAIN"/ping/"$CRONID" -T 10 -t 5 -O /dev/null

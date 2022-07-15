@@ -1,5 +1,5 @@
 #!/bin/bash
-TIME=`date "+%d-%m-%Y--%H:%M"`
+TIME=`date "+%d-%m-%Y"`
 LOG_FILE=$WORKDIR/logs/$TIME-$BKID.log
 {
 # Actual data backup process start here With signaling failures if any!.
@@ -172,7 +172,7 @@ else
 figlet LSS RSYNC
 echo "----------------------------------"
 echo "Rsync backup finished succesfully!"
-wget "$CRONDOMAIN"/ping/"$CRONID" -T 10 -t 5 -O /dev/null
+/bin/bash "$WORKDIR"/"$BKID"-log-cleanup.sh
 fi
 fi
 } | tee -a "${LOG_FILE}"
