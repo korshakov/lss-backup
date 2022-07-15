@@ -1,5 +1,5 @@
 #!/bin/bash
-
+{
 # Actual data backup process start here With signaling failures if any!.
 if [[ $PROGRAM == 'RESTIC' ]]
 then
@@ -173,3 +173,4 @@ echo "Rsync backup finished succesfully!"
 wget "$CRONDOMAIN"/ping/"$CRONID" -T 10 -t 5 -O /dev/null
 fi
 fi
+} | tee -a "${LOG_FILE}"
