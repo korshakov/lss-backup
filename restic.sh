@@ -440,7 +440,7 @@ SETUPWORKDIR=$(pwd)
 echo "WORKDIR=$SETUPWORKDIR/database/backup-jobs/$SETUPBKID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 echo "Your backup configuration files will be stored at: $SETUPWORKDIR/database/backup-jobs/$SETUPBKID"
 
-echo "LOG_FILE=$SETUPWORKDIR/logs/$SETUPTIMESTAMP-$SETUPBKID.log" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "LOG_FILE=$SETUPWORKDIR/database/backup-jobs/$SETUPBKID/logs/$SETUPTIMESTAMP-$SETUPBKID.log" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 #create executable file for cronjob starter file.sh
 
