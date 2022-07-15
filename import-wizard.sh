@@ -5,7 +5,7 @@ SETUPWORKDIR=$(pwd)
 TIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 # Preparing backup job executable files and folders.
 
-mkdir -p ./database/backup-jobs/"$SETUPBKID"/logs
+mkdir -p ./database/backup-jobs/"$BKID"/logs
 cp ./functions/source-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 cp ./functions/local-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
 cp ./functions/smb-nfs-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
@@ -19,7 +19,7 @@ cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-d
 cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
-cp ./functions/log-cleanup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
+cp ./functions/log-cleanup.sh ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
@@ -34,7 +34,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
 
 if [[ $RETENTION == 'YES-FULL' ]]
 then
@@ -111,7 +111,7 @@ TIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 
 # Preparing backup job executable files and folders.
 
-mkdir -p ./database/backup-jobs/"$SETUPBKID"/logs
+mkdir -p ./database/backup-jobs/"$BKID"/logs
 cp ./functions/source-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 cp ./functions/local-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
 cp ./functions/smb-nfs-source-folder-checks.sh ./database/backup-jobs/"$BKID"/$BKID-smb-nfs-source-folder-checks.sh
@@ -125,6 +125,7 @@ cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$BKID"/$BKID-d
 cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
+cp ./functions/log-cleanup.sh ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
@@ -139,7 +140,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
 
 cp ./functions/starter-script.sh ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
