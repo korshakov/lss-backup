@@ -1,5 +1,5 @@
 #!/bin/bash
-SECONDS=0
+START_TIME=$SECONDS
 TIME=`date "+%d-%m-%Y--%H:%M"`
 LOG_FILE=$WORKDIR/logs/$TIME-$BKID.log
 {
@@ -176,6 +176,6 @@ echo "Rsync backup finished succesfully!"
 wget "$CRONDOMAIN"/ping/"$CRONID" -T 10 -t 5 -O /dev/null
 fi
 fi
-duration=$SECONDS
-echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+ELAPSED_TIME=$(($SECONDS - $START_TIME))
+echo "Backup took: $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec" 
 } | tee -a "${LOG_FILE}"
