@@ -34,7 +34,8 @@ echo "Would you like to proceed to backup wizard? (y=Yes,n=No)"
 read WIZARD
 if [[ $WIZARD == 'y' ]]
 then
+echo "LSS Backup is now installed."
 ./backup-wizard.sh
 else
-echo "Good bye!"
+echo "LSS Backup is now installed."
 fi
