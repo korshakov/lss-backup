@@ -1,4 +1,6 @@
 #!/bin/bash
+TIME=`date "+%d-%m-%Y--%H:%M"`
+LOG_FILE=$WORKDIR/logs/$TIME-$SETUPBKID.log
 {
 SECONDS=0
 # Actual data backup process start here With signaling failures if any!.
