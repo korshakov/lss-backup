@@ -1,5 +1,6 @@
 #!/bin/bash
 {
+SECONDS=0
 # Actual data backup process start here With signaling failures if any!.
 if [[ $PROGRAM == 'RESTIC' ]]
 then
@@ -173,4 +174,6 @@ echo "Rsync backup finished succesfully!"
 wget "$CRONDOMAIN"/ping/"$CRONID" -T 10 -t 5 -O /dev/null
 fi
 fi
+duration=$SECONDS
+echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 } | tee -a "${LOG_FILE}"
