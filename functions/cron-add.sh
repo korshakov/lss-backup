@@ -1,4 +1,5 @@
 #!/bin/bash
+source /etc/lss-backup/database/backup-jobs/CUS-03/CUS-03-Configuration.env
 
 # this is simple cron injection script to do it for you instead.
 
@@ -18,7 +19,7 @@ then
 echo "Injecting command to crontab to the last line."
 echo "Here is is for your convinience: $BKCRONTIMEMM $BKCRONTIMEHH * * $BKCRONWEEKLY /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 line1="### Cron for $BKID-$BKFQ-$BKNAME"
-line2="$BKCRONTIMEMM $BKCRONTIMEHH * * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+line2="$BKCRONTIMEMM $BKCRONTIMEHH * * $BKCRONWEEKLY /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 (crontab -u root -l; echo "$line1" ) | crontab -u root -
 (crontab -u root -l; echo "$line2" ) | crontab -u root -
 service cron reload
@@ -29,7 +30,7 @@ then
 echo "Injecting command to crontab to the last line."
 echo "Here is is for your convinience: $BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 line1="### Cron for $BKID-$BKFQ-$BKNAME"
-line2="$BKCRONTIMEMM $BKCRONTIMEHH * * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+line2="$BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 (crontab -u root -l; echo "$line1" ) | crontab -u root -
 (crontab -u root -l; echo "$line2" ) | crontab -u root -
 service cron reload
