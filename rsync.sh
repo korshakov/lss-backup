@@ -388,9 +388,8 @@ echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$BKSOURCETYPE-to-$BKDES
 
 
 
-echo "Injecting crontab."
+### Calling cron injection function
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-cron-add.sh
-sleep 1s
 
 echo "Wizard is now finished. Would you like to run backup now?"
 
