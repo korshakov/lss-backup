@@ -66,13 +66,15 @@ echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRO
 
 ### END OF MONTHLY FUNCTION
 
+### START OF MANUALFUNCTION
+
 manualfunction (){
 
 echo "BKFQ=Manual-Only" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 }
 
-### START OF MANUALFUNCTION
+### END OF MANUAL FUNCTION
 
 ### LOCAL SOURCE FUNCTION
 
