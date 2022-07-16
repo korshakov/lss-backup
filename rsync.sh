@@ -66,6 +66,8 @@ echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRO
 
 ### END OF MONTHLY FUNCTION
 
+### START OF MANUALFUNCTION
+
 ### LOCAL SOURCE FUNCTION
 
 localsourcefunction () {
@@ -310,7 +312,7 @@ read SETUPBKNAME
 echo "BKNAME=$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "Set your backup frequency."
-select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual Only"; do
+select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual-Only"; do
     case $SETUPBKFQ in
 
         Daily ) CRON=REPEAT ; dailyfunction ; break;;
@@ -319,7 +321,7 @@ select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual Only"; do
         
         Monthly ) CRON=REPEAT ; monthlyfunction ; break;;
         
-        "Manual Only" ) CRON=MANUAL ; break;;
+        Manual-Only ) CRON=MANUAL break;;
 
     esac
 done

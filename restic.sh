@@ -482,7 +482,7 @@ select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual Only"; do
         
         Monthly ) CRON=REPEAT ; monthlyfunction ; break;;
         
-        "Manual Only" ) CRON=MANUAL ; break;;
+        Manual-Only ) CRON=MANUAL ; break;;
 
     esac
 done
