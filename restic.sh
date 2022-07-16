@@ -67,6 +67,16 @@ echo "Your backup will run monthly on the day $SETUPBKCRONMONTHLY at $SETUPBKCRO
 
 ### END OF MONTHLY FUNCTION
 
+### START OF MANUALFUNCTION
+
+manualfunction (){
+
+echo "BKFQ=Manual-Only" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF MANUAL FUNCTION
+
 ### LOCAL SOURCE FUNCTION
 
 localsourcefunction () {
@@ -455,6 +465,8 @@ cp ./functions/repository-check.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKI
 cp ./functions/destination-type-checks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-destination-type-checks.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-backup.sh
 cp ./functions/log-cleanup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
+cp ./functions/cron-add.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
+cp ./functions/cron-remove.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-local-source-folder-checks.sh
@@ -467,6 +479,8 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-smb-nfs-destination-folder-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-backup.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
 
 echo "Name your backup e.g. Sage-Backup-TO-LS-CLOUD Important! Spaces are not allowed!"
 read SETUPBKNAME
@@ -476,13 +490,13 @@ echo "Set your backup frequency."
 select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual-Only"; do
     case $SETUPBKFQ in
 
-        Daily ) CRON=REPEAT ; dailyfunction ; break;;
+        Daily ) dailyfunction ; break;;
 
-        Weekly ) CRON=REPEAT ; weeklyfunction ; break;;
+        Weekly ) weeklyfunction ; break;;
         
-        Monthly ) CRON=REPEAT ; monthlyfunction ; break;;
+        Monthly ) monthlyfunction ; break;;
         
-        Manual-Only ) CRON=MANUAL ; break;;
+        Manual-Only ) manualfunction ; break;;
 
     esac
 done
@@ -554,20 +568,11 @@ echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 echo "Preparing starter script."
 cp ./functions/starter-script.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
-sleep 1s
 
-if [[ $CRON == 'MANUAL' ]]
-then
-echo "No cron will be added as manual invoke has been selected."
-else
-cp ./functions/cron-add.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
-cp ./functions/cron-remove.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
-echo "Injecting crontab."
+
+### Calling cron injection function
 /bin/bash "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-cron-add.sh
-sleep 1s
-fi
+
 
 
 echo "Restic repository will initialized in the first backup run."
