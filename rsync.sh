@@ -374,7 +374,7 @@ echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$BKSOURCETYPE-to-$BKDES
 
 
 if [[ $CRON == 'MANUAL' ]]
-ÿ en
+then
 echo "No cron will be added as manual invoke has been selected."
 else
 cp ./functions/cron-add.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
