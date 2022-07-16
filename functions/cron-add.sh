@@ -1,5 +1,5 @@
 #!/bin/bash
-source /etc/lss-backup/database/backup-jobs/CUS-03/CUS-03-Configuration.env
+
 
 # this is simple cron injection script to do it for you instead.
 
