@@ -36,7 +36,12 @@ line2="$BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$
 service cron reload
 fi
 
-if [[ $BKFQ != 'Daily' ]] && [[ $BKFQ != 'Weekly' ]] && [[ $BKFQ != 'Monthly' ]]
+if [[ $BKFQ == 'Manual-Only' ]]
+then
+echo "No cronjob will be added as Manual Only was selected."
+fi
+
+if [[ $BKFQ != 'Daily' ]] && [[ $BKFQ != 'Weekly' ]] && [[ $BKFQ != 'Monthly' ]] && [[ $BKFQ != 'Manual-Only' ]]
 then
 echo "Ups! This should not happen here!"
 fi
