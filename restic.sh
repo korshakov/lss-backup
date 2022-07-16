@@ -473,7 +473,7 @@ read SETUPBKNAME
 echo "BKNAME=$SETUPBKNAME" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "Set your backup frequency."
-select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual Only"; do
+select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual-Only"; do
     case $SETUPBKFQ in
 
         Daily ) CRON=REPEAT ; dailyfunction ; break;;
