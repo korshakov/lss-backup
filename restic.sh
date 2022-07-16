@@ -476,11 +476,11 @@ echo "Set your backup frequency."
 select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual Only"; do
     case $SETUPBKFQ in
 
-        Daily ) dailyfunction ; break;;
+        Daily ) CRON=REPEAT ; dailyfunction ; break;;
 
-        Weekly ) weeklyfunction ; break;;
+        Weekly ) CRON=REPEAT ; weeklyfunction ; break;;
         
-        Monthly ) monthlyfunction ; break;;
+        Monthly ) CRON=REPEAT ; monthlyfunction ; break;;
         
         "Manual Only" ) CRON=MANUAL ; break;;
 
