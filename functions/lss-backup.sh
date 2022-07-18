@@ -8,7 +8,7 @@ then
 START_TIME=$SECONDS
 TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 echo "Starting restic process at $TIMERTIMESTAMP"
-restic -r $LSS_REPOSITORY backup $SDIR -v
+restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information'
 RESTICCODE="$?"
 if [[ $RESTICCODE != '0' ]]
 then
