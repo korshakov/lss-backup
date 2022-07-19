@@ -24,6 +24,11 @@ if [ -d "$BACKUPDIR" ];
 	exit
 	else
         echo "Automatic LOCAL destination folder creation failed! Sending failed ping!"
+           if [[ $MONITORING == 'NO' ]]
+   then
+   echo "Healthchecks monitoring disabled."
+   else
 	wget "$CRONDOMAIN"/ping/"$CRONID"/8 -T 10 -t 5 -O /dev/null
+    fi
 	fi
 fi
