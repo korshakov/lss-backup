@@ -26,12 +26,12 @@ then
 	# the user should provide his/her input within 20 seconds
 	if ! read -r -t 50 FIRSTRUN; then
      	# if its not provided then the script should exit
-               if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
-                wget "$CRONDOMAIN"/ping/"$CRONID"/15 -T 10 -t 5 -O /dev/null && exit
-                fi
+    if [[ $MONITORING == 'NO' ]]
+    then
+    echo "Healthchecks monitoring disabled."
+    else
+    wget "$CRONDOMAIN"/ping/"$CRONID"/15 -T 10 -t 5 -O /dev/null && exit
+    fi
      	exit
 	fi
 	if [[ $FIRSTRUN == 'y' ]]
@@ -46,12 +46,12 @@ then
 	/bin/bash "$WORKDIR"/"$BKID"-lss-backup.sh
 	else
 	# User confirmed that this shoud not happen! Sending failed ping and exitting.
-                   if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
-                wget "$CRONDOMAIN"/ping/"$CRONID"/16 -T 10 -t 5 -O /dev/null
-                fi
+    if [[ $MONITORING == 'NO' ]]
+    then
+    echo "Healthchecks monitoring disabled."
+    else
+    wget "$CRONDOMAIN"/ping/"$CRONID"/16 -T 10 -t 5 -O /dev/null
+    fi
 	exit
 	fi
     fi
