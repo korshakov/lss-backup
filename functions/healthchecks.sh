@@ -1,6 +1,4 @@
 #!/bin/bash
-echo "HIIIIIII"
-source /etc/lss-backup/database/backup-jobs/FLD-01/FLD-01-Configuration.env
 #source file will be added here.
 if [[ $MONITORING == "NO" ]]; then
 echo "Monitoring is disabled"
