@@ -7,7 +7,11 @@ if find "$SDIR" -mindepth 1 -maxdepth 1 | read; then
    /bin/bash "$WORKDIR"/"$BKID"-destination-type-checks.sh
    exit
 else
-   echo "Warning LOCAL source is either empty or does not exist! There is nothing to backup! Sending failed ping and exitting backup process."
+   echo "Warning LOCAL source is either empty or does not exist! There is nothing to backup! Aborting backup!"
+    if [[ $MONITORING == 'NO' ]]
+   then
+   echo "Healthchecks monitoring disabled."
+   else
    wget "$CRONDOMAIN"/ping/"$CRONID"/7 -T 10 -t 5 -O /dev/null
-   exit
+   fi
 fi
