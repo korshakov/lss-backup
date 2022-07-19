@@ -29,6 +29,7 @@ read SETUPTIMEZONE
 timedatectl set-timezone $SETUPTIMEZONE
 echo "Your new date and time is: $SETUPTIME"
 fi
+service cron restart
 
 echo "Would you like to proceed to backup wizard? (y=Yes,n=No)"
 read WIZARD
