@@ -421,6 +421,20 @@ done
 
 ### END OF NO BACKUP RUN FUNCTION
 
+### Healthchecks monitoring
+
+healthchecksfunction () {
+
+echo "What is your healthchecks url? Example: https://cron.lssolutions.ie"
+read SETUPCRONDOMAIN
+echo "### HEALTHCHECKS VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "CRONDOMAIN=$SETUPCRONDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "What is your healthchecks cron id? Example: 8bfc3d73-d49e-427c-8e70-8e40a7d67f1d"
+read SETUPCRONID
+echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
 ###### END OF FUNCTIONS
 ###### MAIN CODE
 
@@ -556,13 +570,15 @@ echo "Input your restic repository password! You MUST store it securely somewher
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "What is your healthchecks url? Example: https://cron.lssolutions.ie"
-read SETUPCRONDOMAIN
-echo "### HEALTHCHECKS VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "CRONDOMAIN=$SETUPCRONDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "What is your healthchecks cron id? Example: 8bfc3d73-d49e-427c-8e70-8e40a7d67f1d"
-read SETUPCRONID
-echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+select HEALTHCHECKSSETUP in "YES" "NO" ; do
+    case $HEALTHCHECKSSETUP in
+
+        YES) healthchecksfunction ; break;;
+
+        NO ) break;;
+
+    esac
+done
 
 
 echo "Preparing starter script."
