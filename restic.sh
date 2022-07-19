@@ -435,6 +435,7 @@ echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 
 }
 
+### End of healthchecks monitoring
 ###### END OF FUNCTIONS
 ###### MAIN CODE
 
