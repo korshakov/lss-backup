@@ -20,6 +20,7 @@ cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 cp ./functions/log-cleanup.sh ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
+cp ./functions/healthchecks.sh ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
@@ -35,6 +36,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
 
 if [[ $RETENTION == 'YES-FULL' ]]
 then
@@ -126,6 +128,7 @@ cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 cp ./functions/log-cleanup.sh ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
+cp ./functions/healthchecks.sh ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
@@ -141,6 +144,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
 
 cp ./functions/starter-script.sh ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/"$BKID-$BKFQ-$BKNAME.sh"
@@ -206,9 +210,7 @@ if [ -f "$importfile" ]; then
         rsyncimport;
         fi
     fi
-    
-    
-else 
+else
     echo "$importfile does not exist. Try again!"
     echo "Import wizard will start over in 5 seconds. Quit by pressing CTRL+C"
     sleep 5s
