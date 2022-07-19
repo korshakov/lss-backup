@@ -249,7 +249,23 @@ echo "DDOMAIN=$SETUPDDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-
 
 ### END OF NFS DESTINATION FUNCTION
 
-###### MAIN CODE STARTS HERE
+### Healthchecks monitoring
+
+healthchecksfunction () {
+
+echo "What is your healthchecks url? Example: https://cron.lssolutions.ie"
+read SETUPCRONDOMAIN
+echo "### HEALTHCHECKS VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "CRONDOMAIN=$SETUPCRONDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "What is your healthchecks cron id? Example: 8bfc3d73-d49e-427c-8e70-8e40a7d67f1d"
+read SETUPCRONID
+echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### End of healthchecks monitoring
+###### END OF FUNCTIONS
+###### MAIN CODE
 
 figlet LSS RSYNC
 echo "Give your backup job an ID, usually numbers would be the best."
@@ -370,14 +386,15 @@ select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
-echo "What is your healthchecks url? Example: https://cron.lssolutions.ie"
-read SETUPCRONDOMAIN
-echo "### HEALTHCHECKS VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "CRONDOMAIN=$SETUPCRONDOMAIN" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "What is your healthchecks cron id? Example: 8bfc3d73-d49e-427c-8e70-8e40a7d67f1d"
-read SETUPCRONID
-echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+select HEALTHCHECKSSETUP in "YES" "NO" ; do
+    case $HEALTHCHECKSSETUP in
 
+        YES) healthchecksfunction ; break;;
+
+        NO ) break;;
+
+    esac
+done
 
 echo "Preparing starter script."
 cp ./functions/starter-script.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
