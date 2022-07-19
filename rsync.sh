@@ -386,12 +386,13 @@ select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
     esac
 done
 
+echo "Would you like to use healthchecks monitoring?"
 select HEALTHCHECKSSETUP in "YES" "NO" ; do
     case $HEALTHCHECKSSETUP in
 
         YES) healthchecksfunction ; break;;
 
-        NO ) break;;
+        NO ) echo "MONITORING=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env" ; break;;
 
     esac
 done
