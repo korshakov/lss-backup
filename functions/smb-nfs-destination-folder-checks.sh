@@ -23,12 +23,7 @@ if [ -d "$BACKUPDIR" ];
         /bin/bash "$WORKDIR"/"$BKID"-repository-check.sh
 	exit
     	else
-	echo "Warning! Automatic SMB/NFS destination folder creation failed!"
-       if [[ $MONITORING == 'NO' ]]
-   then
-   echo "Healthchecks monitoring disabled."
-   else
-   wget "$CRONDOMAIN"/ping/"$CRONID"/14 -T 10 -t 5 -O /dev/null
-   fi
-fi
+	echo "Warning! Automatic SMB/NFS destination folder creation failed! Sending failed ping!"
+	wget "$CRONDOMAIN"/ping/"$CRONID"/14 -T 10 -t 5 -O /dev/null
+	fi
 fi

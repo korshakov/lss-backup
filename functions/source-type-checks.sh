@@ -4,6 +4,7 @@ TIMESTAMP=`date "+%D-%M-%Y--%H:%M:%S"`
 # SMB Source directory checks #
 echo "Checking if source is SMB."
 if [[ $BKSOURCETYPE == 'SMB' ]]
+then
  echo "Checking if source SMB is mounted!"
  if mount | grep "$SDIR" > /dev/null; then
 	echo "Smb source mountpoint is mounted!"
@@ -25,13 +26,8 @@ if [[ $BKSOURCETYPE == 'SMB' ]]
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-source-folder-checks.sh
 		exit
                 else
-                echo "Automatic mount of source failed! Aborting backup!"
-                if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
+                echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
                 wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
-                fi
                 exit
                 fi
 
@@ -45,13 +41,8 @@ if [[ $BKSOURCETYPE == 'SMB' ]]
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-source-folder-checks.sh
 		exit
 		else
-        	echo "Automatic mount of source failed! Aborting backup!"
-                if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
-                wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
-                fi
+        	echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
+        	wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
         	exit
 		fi
 
@@ -85,13 +76,8 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-source-folder-checks.sh
                 exit
 		else
-                echo "Automatic mount of source failed! Aborting backup!"
-                if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
+                echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
                 wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
-                fi
                 exit
                 fi
 
@@ -105,18 +91,13 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-source-folder-checks.sh
                 exit
 		else
-                echo "Automatic mount of source failed! Aborting backup!"
-                if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
+                echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
                 wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
-                fi
                 exit
                 fi
 
         fi
-fi
+ fi
 else
 echo "Checking if source is LOCAL."
 fi
@@ -127,11 +108,6 @@ then
 /bin/bash "$WORKDIR"/"$BKID"-local-source-folder-checks.sh
 exit
 else
-echo "Variable settings are incorrect!"
-if [[ $MONITORING == 'NO' ]]
-then
-echo "Healthchecks monitoring disabled."
-else
+echo "Variable settings are incorrect! Sending failed ping!"!
 wget "$CRONDOMAIN"/ping/"$CRONID"/11 -T 10 -t 5 -O /dev/null
-fi
 fi

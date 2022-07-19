@@ -12,10 +12,6 @@ restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information'
 RESTICCODE="$?"
 if [[ $RESTICCODE != '0' ]]
 then
-   if [[ $MONITORING == 'NO' ]]
-   then
-   echo "Healthchecks monitoring disabled."
-   else
     if [[ $RESTICCODE == '1' ]]
     then
     echo "Restic finished with error $RESTICCODE Sending failed ping!"
@@ -32,7 +28,6 @@ then
     then
     echo "Restic finished with unknown error, investigate!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/39 -T 10 -t 5 -O /dev/null
-    fi
     fi
 else
 figlet LSS RESTIC 
@@ -78,10 +73,6 @@ fi
 RSYNCCODE="$?"
 if [[ $RSYNCCODE != '0' ]]
 then
-   if [[ $MONITORING == 'NO' ]]
-   then
-   echo "Healthchecks monitoring disabled."
-   else
     if [[ $RSYNCCODE == '1' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
@@ -183,7 +174,6 @@ then
     echo "Rsync finished with unknown error, investigate!"
     wget "$CRONDOMAIN"/ping/"$CRONID"/40 -T 10 -t 5 -O /dev/null
     fi
-fi
 else
 # Sending closing ping backup is finished
 figlet LSS RSYNC

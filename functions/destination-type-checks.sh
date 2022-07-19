@@ -26,13 +26,8 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-destination-folder-checks.sh
 		exit
                 else
-                echo "Automatic mount of destination failed! Aborting backup!"
-                   if [[ $MONITORING == 'NO' ]]
-                    then
-                    echo "Healthchecks monitoring disabled."
-                    else
-                    wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
-                    fi
+                echo "Automatic mount of destination failed! Aborting backup and sending failed ping!"
+                wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
                 exit
                 fi
 
@@ -46,13 +41,8 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-destination-folder-checks.sh
                 exit
 		else
-        	echo "Automatic mount of destination failed! Aborting backup!"
-               if [[ $MONITORING == 'NO' ]]
-                then
-                echo "Healthchecks monitoring disabled."
-                else
-        	   wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
-               fi
+        	echo "Automatic mount of destination failed! Aborting backup and sending failed ping!"
+        	wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
         	exit
 		fi
 
@@ -86,13 +76,8 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-destination-folder-checks.sh
         	exit
                 else
-                echo "Automatic mount of destination failed! Aborting backup!"
-                   if [[ $MONITORING == 'NO' ]]
-                    then
-                    echo "Healthchecks monitoring disabled."
-                    else
-                    wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
-                    fi
+                echo "Automatic mount of destination failed! Aborting backup and sending failed ping!"
+                wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
                 exit
                 fi
 
@@ -106,13 +91,8 @@ then
 		/bin/bash "$WORKDIR"/"$BKID"-smb-nfs-destination-folder-checks.sh
         	exit
                 else
-                echo "Automatic mount of destination failed! Aborting backup!"
-                   if [[ $MONITORING == 'NO' ]]
-                    then
-                    echo "Healthchecks monitoring disabled."
-                    else
-                    wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
-                    fi
+                echo "Automatic mount of destination failed! Aborting backup and sending failed ping!"
+                wget "$CRONDOMAIN"/ping/"$CRONID"/10 -T 10 -t 5 -O /dev/null
                 exit
                 fi
 
@@ -139,11 +119,6 @@ then
 /bin/bash "$WORKDIR"/"$BKID"-s3-destination-checks.sh
 exit
 else
-echo "Variable settings are incorrect!"
-   if [[ $MONITORING == 'NO' ]]
-   then
-   echo "Healthchecks monitoring disabled."
-   else
+echo "Variable settings are incorrect! Sending failed ping!"
 wget "$CRONDOMAIN"/ping/"$CRONID"/12 -T 10 -t 5 -O /dev/null
-fi
 fi
