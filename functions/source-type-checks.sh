@@ -27,7 +27,8 @@ then
 		exit
                 else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
-                wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
+        	export STATUS=9
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
                 exit
                 fi
 
@@ -42,7 +43,8 @@ then
 		exit
 		else
         	echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
-        	wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
+        	export STATUS=9
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
         	exit
 		fi
 
@@ -77,7 +79,8 @@ then
                 exit
 		else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
-                wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
+        	export STATUS=9
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
                 exit
                 fi
 
@@ -92,7 +95,8 @@ then
                 exit
 		else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
-                wget "$CRONDOMAIN"/ping/"$CRONID"/9 -T 10 -t 5 -O /dev/null
+        	export STATUS=9
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
                 exit
                 fi
 
@@ -109,5 +113,6 @@ then
 exit
 else
 echo "Variable settings are incorrect! Sending failed ping!"!
-wget "$CRONDOMAIN"/ping/"$CRONID"/11 -T 10 -t 5 -O /dev/null
+        	export STATUS=11
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
 fi

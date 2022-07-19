@@ -24,6 +24,7 @@ if [ -d "$BACKUPDIR" ];
 	exit
     	else
 	echo "Warning! Automatic SMB/NFS destination folder creation failed! Sending failed ping!"
-	wget "$CRONDOMAIN"/ping/"$CRONID"/14 -T 10 -t 5 -O /dev/null
+        	export STATUS=14
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
 	fi
 fi

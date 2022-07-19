@@ -26,7 +26,8 @@ then
 	# the user should provide his/her input within 20 seconds
 	if ! read -r -t 50 FIRSTRUN; then
      	# if its not provided then the script should exit
-	wget "$CRONDOMAIN"/ping/"$CRONID"/15 -T 10 -t 5 -O /dev/null && exit
+        	export STATUS=15
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh && exit
      	exit
 	fi
 	if [[ $FIRSTRUN == 'y' ]]
@@ -41,7 +42,8 @@ then
 	/bin/bash "$WORKDIR"/"$BKID"-lss-backup.sh
 	else
 	# User confirmed that this shoud not happen! Sending failed ping and exitting.
-	wget "$CRONDOMAIN"/ping/"$CRONID"/16 -T 10 -t 5 -O /dev/null
+        	export STATUS=16
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
 	exit
 	fi
     fi
@@ -58,5 +60,6 @@ fi
 if [[ $PROGRAM != 'RESTIC' ]] && [[ $PROGRAM != 'RSYNC' ]]
 then
 echo "Something went wrong. Backup config file must be corrupted. Sending failed ping and exiting!"
-wget "$CRONDOMAIN"/ping/"$CRONID"/17 -T 10 -t 5 -O /dev/null
+        	export STATUS=17
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
 fi

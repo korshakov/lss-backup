@@ -15,19 +15,22 @@ then
     if [[ $RESTICCODE == '1' ]]
     then
     echo "Restic finished with error $RESTICCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/18 -T 10 -t 5 -O /dev/null
+        	export STATUS=18
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
 
     if [[ $RESTICCODE == '3' ]]
     then
     echo "Restic finished with error $RESTICCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/19 -T 10 -t 5 -O /dev/null
+        	export STATUS=19
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
 
     if [[ $RESTICCODE != '1' && $RESTICCODE != '3' ]]
     then
     echo "Restic finished with unknown error, investigate!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/39 -T 10 -t 5 -O /dev/null
+        	export STATUS=39
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
 else
 figlet LSS RESTIC 
@@ -76,103 +79,122 @@ then
     if [[ $RSYNCCODE == '1' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/20 -T 10 -t 5 -O /dev/null
+        	export STATUS=20
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '2' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/21 -T 10 -t 5 -O /dev/null
+        	export STATUS=21
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '3' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/22 -T 10 -t 5 -O /dev/null
+        	export STATUS=22
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '4' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/23 -T 10 -t 5 -O /dev/null
+        	export STATUS=23
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '5' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/24 -T 10 -t 5 -O /dev/null
+        	export STATUS=24
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '6' ]]
     then
-    echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/25 -T 10 -t 5 -O /dev/null
+        	export STATUS=25
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '10' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/26 -T 10 -t 5 -O /dev/null
+        	export STATUS=26
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '11' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/27 -T 10 -t 5 -O /dev/null
+        	export STATUS=27
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '12' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/28 -T 10 -t 5 -O /dev/null
+        	export STATUS=28
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '13' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/29 -T 10 -t 5 -O /dev/null
+        	export STATUS=29
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '14' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/30 -T 10 -t 5 -O /dev/null
+        	export STATUS=30
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '20' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/31 -T 10 -t 5 -O /dev/null
+        	export STATUS=31
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '21' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/32 -T 10 -t 5 -O /dev/null
+        	export STATUS=32
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '22' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/33 -T 10 -t 5 -O /dev/null
+        	export STATUS=33
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '23' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/34 -T 10 -t 5 -O /dev/null
+        	export STATUS=34
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '24' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/35 -T 10 -t 5 -O /dev/null
+        	export STATUS=35
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '25' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/36 -T 10 -t 5 -O /dev/null
+        	export STATUS=36
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '30' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/37 -T 10 -t 5 -O /dev/null
+        	export STATUS=37
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
     if [[ $RSYNCCODE == '35' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/38 -T 10 -t 5 -O /dev/null
+        	export STATUS=38
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
 
     if [[ "$RSYNCCODE" -ge 7 && "$RSYNCCODE" -le 9 ]] && [[ "$RSYNCCODE" -ge 15 && "$RSYNCCODE" -le 19 ]] && [[ "$RSYNCCODE" -ge 26 && "$RSYNCCODE" -le 29 ]] && [[ "$RSYNCCODE" -ge 31 && "$RSYNCCODE" -le 34 ]] && [[ "$RSYNCCODE" -ne 35 ]] && [[ "$RSYNCCODE" -gt 36 ]]
     then
     echo "Rsync finished with unknown error, investigate!"
-    wget "$CRONDOMAIN"/ping/"$CRONID"/40 -T 10 -t 5 -O /dev/null
+        	export STATUS=40
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
     fi
 else
 # Sending closing ping backup is finished

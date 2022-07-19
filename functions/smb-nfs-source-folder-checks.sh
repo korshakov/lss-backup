@@ -7,6 +7,7 @@ if find "$SDIR" -mindepth 1 -maxdepth 1 | read; then
    exit
 else
    echo "Warning SMB/NFS source directory is empty! There is nothing to backup! Sending failed ping and exitting backup process."
-   wget "$CRONDOMAIN"/ping/"$CRONID"/13 -T 10 -t 5 -O /dev/null
+        	export STATUS=13
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
    exit
 fi

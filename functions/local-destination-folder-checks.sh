@@ -24,6 +24,7 @@ if [ -d "$BACKUPDIR" ];
 	exit
 	else
         echo "Automatic LOCAL destination folder creation failed! Sending failed ping!"
-	wget "$CRONDOMAIN"/ping/"$CRONID"/8 -T 10 -t 5 -O /dev/null
+        	export STATUS=8
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
 	fi
 fi

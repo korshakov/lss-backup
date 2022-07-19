@@ -8,6 +8,7 @@ if find "$SDIR" -mindepth 1 -maxdepth 1 | read; then
    exit
 else
    echo "Warning LOCAL source is either empty or does not exist! There is nothing to backup! Sending failed ping and exitting backup process."
-   wget "$CRONDOMAIN"/ping/"$CRONID"/7 -T 10 -t 5 -O /dev/null
+        	export STATUS=7
+            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
    exit
 fi
