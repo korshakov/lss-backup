@@ -571,12 +571,13 @@ echo "Input your restic repository password! You MUST store it securely somewher
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
+echo "Would you like to use healthchecks monitoring?"
 select HEALTHCHECKSSETUP in "YES" "NO" ; do
     case $HEALTHCHECKSSETUP in
 
         YES) healthchecksfunction ; break;;
 
-        NO ) break;;
+        NO ) echo "MONITORING=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env" ; break;;
 
     esac
 done
