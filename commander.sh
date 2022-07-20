@@ -22,7 +22,7 @@ echo "List of backup(s):"
 echo "--------------------------------"
 column -t ./database/backup-database.txt
 echo "--------------------------------"
-echo "Type backup job ID to list snapshosts."
+echo "Type backup job ID."
 read BACKUPJOB
 
 	if [ -d "./database/backup-jobs/$BACKUPJOB" ];
