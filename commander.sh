@@ -7,6 +7,24 @@ restic -r $LSS_REPOSITORY snapshots
 
 }
 
+removesnapshots () {
+
+restic -r $LSS_REPOSITORY snapshots
+echo "Type in snapshot ID to remove."
+read SNAPREMOVE
+echo "Removing snapshot is not revertable process, are you 100% sure you want to delete this snapshost?"
+
+select snapremoveconfirm in "Yes - Delete snapshot now!" "No - Cancel now!"; do
+case $snapremoveconfirm in
+
+        "Yes - Delete snapshot now!" ) restic -r $LSS_REPOSITORY forget "$SNAPREMOVE" ; break;;
+
+        "No - Cancel now!" ) exit;;
+esac
+done
+
+}
+
 listkeys () {
 
 restic -r $LSS_REPOSITORY key list
@@ -22,7 +40,7 @@ echo "List of backup(s):"
 echo "--------------------------------"
 column -t ./database/backup-database.txt
 echo "--------------------------------"
-echo "Type backup job ID."
+echo "Choose your backup job first."
 read BACKUPJOB
 
 	if [ -d "./database/backup-jobs/$BACKUPJOB" ];
@@ -35,10 +53,12 @@ read BACKUPJOB
     export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
     
-    select commanderselect in "List Snapshots" "List Keys" "Exit"; do
+    select commanderselect in "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
     case $commanderselect in
 
         "List Snapshots" ) listsnapshots ; break;;
+        
+        "Remove Snapshots" ) removesnapshots ; break;;
         
         "List Keys" ) listkeys ; break;;
 
