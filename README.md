@@ -8,7 +8,7 @@ Make sure you are downloading the latest release.
 wget https://github.com/korshakov/lss-backup/archive/refs/tags/v2.84.tar.gz
 ```
 ```
-tar -xvf v2.84tar.gz
+tar -xvf v2.84.tar.gz
 rm v2.84.tar.gz
 mv lss-backup-2.84 lss-backup
 cd lss-backup
