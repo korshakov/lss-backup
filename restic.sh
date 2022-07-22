@@ -287,10 +287,6 @@ cp ./functions/lss-prune.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-p
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-reten-full.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-prune.sh
 
-echo "How many last (most recent) backups to keep? Enter a numeric number. Example: 7"
-read SETUPRETENLAST
-echo "RESTIC_FORGETLAST=$SETUPRETENLAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-
 echo "How many keep within daily backups to keep? Example: 7d means 7 days."
 read  SETUPRETENDAILY
 echo "RESTIC_FORGETDAILY=$SETUPRETENDAILY" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
