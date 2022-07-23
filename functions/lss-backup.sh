@@ -8,7 +8,7 @@ then
 START_TIME=$SECONDS
 TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 echo "Starting restic process at $TIMERTIMESTAMP"
-restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information'
+restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information' --exclude='$RECYCLE.BIN'
 RESTICCODE="$?"
 if [[ $RESTICCODE != '0' ]]
 then
@@ -69,9 +69,9 @@ TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 echo "Starting rsync process at $TIMERTIMESTAMP"
 if [[ $RSYNCMODE == 'NOPERMNOOWNNOGP' ]]
 then
-rsync -avp --no-perms --no-owner --no-group --exclude='System Volume Information' $SDIR $LSS_REPOSITORY
+rsync -avp --no-perms --no-owner --no-group --exclude='System Volume Information' --exclude='$RECYCLE.BIN' $SDIR $LSS_REPOSITORY
 else
-rsync -avp --exclude='System Volume Information' $SDIR $LSS_REPOSITORY
+rsync -avp --exclude='System Volume Information' --exclude='$RECYCLE.BIN' $SDIR $LSS_REPOSITORY
 fi
 RSYNCCODE="$?"
 if [[ $RSYNCCODE != '0' ]]
