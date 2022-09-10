@@ -1,0 +1,91 @@
+LSS Backup Function Documentation
+1 - Github Script
+	Can be found on github repository page. Its a script used to download LSS Backup program.
+
+2 - Install lss backup
+	Installs all LSS Backup dependencies. Sets all files as executable.
+
+3 - Backup Wizard
+	Script to choose either RSYNC or RESTIC
+
+4 - Restic
+	Script to setup backup job using RESTIC program. It asks user to input all important informations
+	to setup a backup job.
+
+5 - Rsync
+	Script to setup a backup job using RSYNC program. It asks user to input all important informations
+	to setup a backup job.
+
+6 - Cron Add 
+	Script which adds entry to crontab.
+
+7 - Restic Repo Init Only
+	Script which invoked restic repo initialization only. This is good for situations when user does
+	not want to run backup immidietly, but rather let the backup run on first schedule. Restic repository
+	must be initialized before schedule, otherwise backup job on schedule will fail.
+
+8 - Starter Script
+	Invokes healthchecks start command to let healthchecks know that cronjob has started followed by
+	backup config check.
+
+9 - Backup Config Check
+	As of right now backup config check just prints out configuration file for user, after that script
+	calls source type checks.
+
+10 - Source Type Checks
+	Script checks if source has been specified as LOCAL, SMB or NFS. For SMB and NFS it will further check
+	if user specified domain or not. It will mount all required SMB/NFS paths if mount fails it will send
+	failed ping.
+
+11 - Local Source Folder Checks
+	Script checks if local source folder is empty and if folder exists. If empty or does not exist
+	scritp will send failed ping.
+
+12 - SNB/NFS Source Folder Checks
+	Script checks if smb/nfs source folder is empty and if folder exists. If empty or does not exist
+	scritp will send failed ping.
+
+13 - Destination Type Checks
+	Script checks if destination has been specified as LOCAL, SMB, NFS or S3. For SMB and NFS it will further check
+	if user specified domain or not. It will mount all required SMB/NFS paths if mount fails it will send
+	failed ping.
+
+14 - Local Destination Folder Check
+	Script checks if destination folder exists, if not it will create folder specified by user. If folder
+	creation fails it will send fail ping.
+
+15 - SMB/NFS Destination folder checks
+	Script checks if destination folder exists, if not it will create folder specified by user. If folder
+	creation fails it will send fail ping.
+
+16 - S3 Destination checks
+	Reserved for future use.
+
+17 - Repository Check
+	If RSYNC is used as a backup program it will move to lss backup script. If RESTIC is used as a backup it
+	will export all restic s3 variables then check if snapshost exist. If not it will ask user to confirm
+	that this is first time backup. User has 50 seconds to confirm. If it isnt first run program will exit and
+	send failed ping.
+
+18 - LSS Backup
+	Script will either run RESTIC or RSYNC to start backup process. It will check all exit codes and based on 
+	exit code it will either signal failure or success. User will be able to check exactly what failed
+	by following exit code documents. Rsync process at the end moves to backup log cleanup.
+
+19 - LSS No Reten, LSS Reten Keep Last Only , LSS Reten Full
+	At the end of restic process if succesfull it will move to backup retention cleanup. Based on user 
+	specified retention script will all backups no longer needed.
+
+20 - LSS Prune
+	After Retention LSS scripts from point 19 will move imidietly to lss prune. Script will delete all
+	forgotten snapshots.
+
+21 Log Cleanup
+	Log cleanup will clean any logs older than 2 weeks.
+
+END
+
+
+
+
+	
