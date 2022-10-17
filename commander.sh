@@ -31,6 +31,12 @@ restic -r $LSS_REPOSITORY key list
 
 }
 
+backupnow () {
+
+./database/backup-jobs/$BACKUPJOB/$BACKUPJOB-lss-backup.sh
+
+}
+
 ### End of restic functions
 clear
 figlet LSS COMMANDER
@@ -53,8 +59,10 @@ read BACKUPJOB
     export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
     
-    select commanderselect in "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
+    select commanderselect in "Run Backup Now" "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
     case $commanderselect in
+
+        "Run Backup Now" ) backupnow ; break;;
 
         "List Snapshots" ) listsnapshots ; break;;
         
