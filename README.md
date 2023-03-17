@@ -5,6 +5,7 @@ More information cocming soon. This is early stage of release candidate.
 To Install:
 Make sure you are downloading the latest release.
 ```
+cd /etc
 wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.00.tar.gz
 ```
 ```
