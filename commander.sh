@@ -1,5 +1,5 @@
 #!/bin/bash
-### Restic functions
+### Functions
 
 listsnapshots () {
 
@@ -44,25 +44,83 @@ export BACKUPJOB
 
 }
 
-### End of restic functions
+### End Of Functions
+
+### Checking if any tmp files exists, if yes they are deleted.
+
+FILE1=/etc/lss-backup/database/database.tmp
+if [ -f "$FILE1" ]; then
+echo "Deleting tmp files which shouldnt exist."
+rm "$FILE1"
+fi
+
+FILE2=/etc/lss-backup/database/tmpfile.tmp
+if [ -f "$FILE2" ]; then
+echo "Deleting tmp files which shouldnt exist."
+rm "$FILE2"
+fi
+
+
 clear
 figlet LSS COMMANDER
 if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
 echo "--------------------------------"
 echo "List of backup(s):"
 echo "--------------------------------"
-column -t ./database/backup-database.txt
-echo "--------------------------------"
-echo "Choose your backup job first."
-read BACKUPJOB
 
+file=/etc/lss-backup/database/backup-database.txt
+prepfile=$(awk '(NR>1) {print}' $file)
+echo "$prepfile" >> ./database/"database.tmp"
+
+
+unset option menu ERROR      # prevent inheriting values from the shell
+declare -a menu              # create an array called $menu
+menu[0]=""                   # set and ignore index zero so we can count from 1
+
+# read menu file line-by-line, save as $line
+while IFS= read -r line; do
+  menu[${#menu[@]}]="$line"  # push $line onto $menu[]
+done < ./database/"database.tmp"
+
+# function to show the menu
+menu() {
+  echo "Please select an option by typing in the corresponding number"
+  echo ""
+  for (( i=1; i<${#menu[@]}; i++ )); do
+    echo "$i) ${menu[$i]}"
+  done
+  echo ""
+}
+
+# initial menu
+menu
+read option
+
+# loop until given a number with an associated menu item
+while ! [ "$option" -gt 0 ] 2>/dev/null || [ -z "${menu[$option]}" ]; do
+  echo "No such option '$option'" >&2  # output this to standard error
+  menu
+  read option
+done
+
+# echo "You said '$option' which is '${menu[$option]}'"
+echo "${menu[$option]}" >> ./database/tmpfile.tmp
+rm ./database/"database.tmp"
+
+
+
+SELECTEDBACKUPID=$(awk '{print substr($1,2); }' ./database/tmpfile.tmp)
+
+
+BACKUPJOB="$SELECTEDBACKUPID"
+rm ./database/tmpfile.tmp
 	if [ -d "./database/backup-jobs/$BACKUPJOB" ];
 	then
 	source ./database/backup-jobs/$BACKUPJOB/$BACKUPJOB-Configuration.env
     if [[ $PROGRAM == 'RESTIC' ]]
     then
     export RESTIC_PASSWORD="$RESTIC_PASSWORD"
-    export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" 
+    export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
     export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
 
@@ -85,7 +143,17 @@ read BACKUPJOB
     done
 
     else
-    echo "Backup job used RSYNC program. There are nothing to do."
+
+    select rsynccommanderselect in "Run Backup Now" "Restore Backup" "Exit"; do
+    case $rsynccommanderselect in
+    "Run Backup Now" ) backupnow ; break;;
+
+    "Restore Backup" ) restorebackup ; break;;
+
+    "Exit" ) echo "Nothing to do." ; exit;;
+    esac
+    done
+
     fi
 
 	else
