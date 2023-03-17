@@ -332,15 +332,17 @@ fi
 
 clear
 figlet LSS RESTORE
-if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
-echo "--------------------------------"
-echo "List of backup(s):"
-echo "--------------------------------"
-column -t ./database/backup-database.txt
-echo "--------------------------------"
+# if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
+# echo "--------------------------------"
+# echo "List of backup(s):"
+# echo "--------------------------------"
+# column -t ./database/backup-database.txt
+# echo "--------------------------------"
 
-echo "Which backup would you like to restore?"
-read BACKUPRESTOREID
+# echo "Which backup would you like to restore?"
+# read BACKUPRESTOREID
+
+BACKUPRESTOREID=$BACKUPJOB
 
 # Checking if user has inputted the right backup id.
 if [ -d "./database/backup-jobs/$BACKUPRESTOREID" ];
