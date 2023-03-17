@@ -37,6 +37,13 @@ backupnow () {
 
 }
 
+restorebackup () {
+
+export BACKUPJOB
+./restore-backup.sh
+
+}
+
 ### End of restic functions
 clear
 figlet LSS COMMANDER
@@ -58,16 +65,18 @@ read BACKUPJOB
     export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" 
     export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
-    
-    select commanderselect in "Run Backup Now" "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
+
+    select commanderselect in "Run Backup Now" "Restore Backup" "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
     case $commanderselect in
 
         "Run Backup Now" ) backupnow ; break;;
 
+	"Restore Backup" ) restorebackup ; break;;
+
         "List Snapshots" ) listsnapshots ; break;;
-        
+
         "Remove Snapshots" ) removesnapshots ; break;;
-        
+
         "List Keys" ) listkeys ; break;;
 
         "Exit" ) echo "Nothing to do." ; exit;;
@@ -76,9 +85,9 @@ read BACKUPJOB
     done
 
     else
-    echo "Backup job used RSYNC program. There are no features for this process yet."
+    echo "Backup job used RSYNC program. There are nothing to do."
     fi
-    
+
 	else
 	echo "Wrong backup job ID specified! Exitting"
 	exit
