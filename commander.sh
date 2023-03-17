@@ -33,7 +33,7 @@ restic -r $LSS_REPOSITORY key list
 
 backupnow () {
 
-./database/backup-jobs/$BACKUPJOB/$BACKUPJOB-lss-backup.sh
+./database/backup-jobs/$BACKUPJOB/$BACKUPJOB-$BKFQ-$BKNAME.sh
 
 }
 
@@ -76,7 +76,7 @@ read BACKUPJOB
     done
 
     else
-    echo "Backup job used RSYNC program. There are nothing to do."
+    echo "Backup job used RSYNC program. There are no features for this process yet."
     fi
     
 	else
