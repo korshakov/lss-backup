@@ -4,7 +4,7 @@
 10 - Automatic mount of destination directory failed! Maybe wrong config values?
 11 - Source types are incorrect inside config file! Config was specified incorrectly.
 12 - Destination types are incorrect inside config file! Config was specified incorrectly.
-13 - SMB/NFS Source folder is empty! There should be something to backup!
+13 - SMB/NFS Source folder is empty! There should be something to backup! Or the host is down!
 14 - SMB/NFS Destination folder creation failed!
 15 - Restic reporsitory check timed out either by user or cronjob. If by user this can be ignored, user should know what he is doing. If by cronjob there is serious data missmatch and whole backup job must be reviewed and all data checked!
 16 - User confirmed that this should not happen! This is not good!
