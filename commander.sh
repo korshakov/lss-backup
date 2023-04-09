@@ -44,6 +44,15 @@ export BACKUPJOB
 
 }
 
+destroybackup () {
+export BACKUPJOB
+./remove-backup.sh
+}
+
+createbackup () {
+./backup-wizard.sh
+}
+
 ### End Of Functions
 
 ### Checking if any tmp files exists, if yes they are deleted.
@@ -124,7 +133,7 @@ rm ./database/tmpfile.tmp
     export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     export AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
 
-    select commanderselect in "Run Backup Now" "Restore Backup" "List Snapshots" "Remove Snapshots" "List Keys" "Exit"; do
+    select commanderselect in "Run Backup Now" "Restore Backup" "List Snapshots" "Remove Snapshots" "List Keys" "Create New Backup" "Destroy Backup DANGER" "Exit"; do
     case $commanderselect in
 
         "Run Backup Now" ) backupnow ; break;;
@@ -136,6 +145,10 @@ rm ./database/tmpfile.tmp
         "Remove Snapshots" ) removesnapshots ; break;;
 
         "List Keys" ) listkeys ; break;;
+
+	"Create New Backup" ) createbackup ; break;;
+
+	"Destroy Backup DANGER" ) destroybackup ; break ;;
 
         "Exit" ) echo "Nothing to do." ; exit;;
 
@@ -163,4 +176,14 @@ rm ./database/tmpfile.tmp
 
 else
 echo "There are no backups to list!"
+echo "Would you like to run backup wizard?"
+	select continuetobackupwizard in "Yes" "No"; do
+	case $continuetobackupwizard in
+
+	"Yes" ) createbackup ; break;;
+
+	"No" ) clear && echo "Good Bye!" ; exit;;
+
+	esac
+	done
 fi
