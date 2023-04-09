@@ -6,11 +6,11 @@ To Install:
 Make sure you are downloading the latest release.
 ```
 cd /etc
-wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.00.tar.gz
+wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.10.tar.gz
 ```
 ```
-tar -xvf v3.00.tar.gz
-rm v3.00.tar.gz
+tar -xvf v3.10.tar.gz
+rm v3.10.tar.gz
 mv lss-backup-3.00 lss-backup
 cd lss-backup
 chmod +x *.sh
