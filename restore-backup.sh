@@ -390,6 +390,3 @@ else
 echo "Incorrect backup ID!"
 ./restore-backup.sh
 fi
-else
-echo "There are no backup to restore from!"
-fi
