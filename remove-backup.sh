@@ -132,11 +132,13 @@ grep -v $BKDESTROY ./database/backup-database.txt > ./database/tmpfile && mv ./d
 ### end of config destroy function
 ###### end of functions
 
-if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
-echo "List of backup(s):"
-ls database/backup-jobs/
-echo "--------------------------------"
-BKDESTROY=
+#if find database/backup-jobs/ -mindepth 1 -maxdepth 1 | read; then
+#echo "List of backup(s):"
+#ls database/backup-jobs/
+#echo "--------------------------------"
+
+BKDESTROY="$BACKUPJOB"
+
 while [[ $BKDESTROY = "" ]]; do
    echo "Input backup ID you wish to destroy or press CTRL+C to cancel this process without destroying any backups."
    read BKDESTROY
@@ -149,20 +151,17 @@ then
 # Checking if full destructive mode or just configuration delete.
 echo "Would you like to delete backup data as well? Warning! This is not unrecoverable process!"
 
-select DATADESTROYASK in "Yes - Delete all data" "No - Just delete configuration files" ; do
+select DATADESTROYASK in "Yes - Delete all data" "No - Just delete configuration files" "EXIT!" ; do
     case $DATADESTROYASK in
 
         "Yes - Delete all data" ) datadestroy ; break;;
 
         "No - Just delete configuration files" ) configdestroy ; break;;
 
+	"EXIT!" ) clear && echo "Nothing was deleted! Program closed succesfully." ; exit;;
     esac
 done
 else
 echo "Backup job ID $BKDESTROY does not exist!"
-exit
-fi
-else
-echo "There are no backups to destroy!"
 exit
 fi
