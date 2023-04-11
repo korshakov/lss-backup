@@ -8,9 +8,20 @@ then
 echo "Injecting command to crontab to the last line."
 echo "Here is is for your convinience: $BKCRONTIMEMM $BKCRONTIMEHH * * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 line1="### Cron for $BKID-$BKFQ-$BKNAME"
-line2="$BKCRONTIMEMM $BKCRONTIMEHH * * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+
+if [[ $EMAILSETUP == 'Yes' ]]
+then
+line2="MAILTO=$EMAILSETUPADDR"
+else
+line2="MAILTO=\"\""
+fi
+
+line3="$BKCRONTIMEMM $BKCRONTIMEHH * * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+
+(crontab -u root -l; echo "" ) | crontab -u root -
 (crontab -u root -l; echo "$line1" ) | crontab -u root -
 (crontab -u root -l; echo "$line2" ) | crontab -u root -
+(crontab -u root -l; echo "$line3" ) | crontab -u root -
 service cron reload
 fi
 
@@ -19,9 +30,19 @@ then
 echo "Injecting command to crontab to the last line."
 echo "Here is is for your convinience: $BKCRONTIMEMM $BKCRONTIMEHH * * $BKCRONWEEKLY /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 line1="### Cron for $BKID-$BKFQ-$BKNAME"
-line2="$BKCRONTIMEMM $BKCRONTIMEHH * * $BKCRONWEEKLY /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+
+if [[ $EMAILSETUP == 'Yes' ]]
+then
+line2="MAILTO=$EMAILSETUPADDR"
+else
+line2="MAILTO=\"\""
+fi
+
+line3="$BKCRONTIMEMM $BKCRONTIMEHH * * $BKCRONWEEKLY /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+(crontab -u root -l; echo "" ) | crontab -u root -
 (crontab -u root -l; echo "$line1" ) | crontab -u root -
 (crontab -u root -l; echo "$line2" ) | crontab -u root -
+(crontab -u root -l; echo "$line3" ) | crontab -u root -
 service cron reload
 fi
 
@@ -30,9 +51,19 @@ then
 echo "Injecting command to crontab to the last line."
 echo "Here is is for your convinience: $BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
 line1="### Cron for $BKID-$BKFQ-$BKNAME"
-line2="$BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+
+if [[ $EMAILSETUP == 'Yes' ]]
+then
+line2="MAILTO=$EMAILSETUPADDR"
+else
+line2="MAILTO=\"\""
+fi
+
+line3="$BKCRONTIMEMM $BKCRONTIMEHH $BKCRONMONTHLY * * /bin/bash $WORKDIR/$BKID-$BKFQ-$BKNAME.sh"
+(crontab -u root -l; echo "" ) | crontab -u root -
 (crontab -u root -l; echo "$line1" ) | crontab -u root -
 (crontab -u root -l; echo "$line2" ) | crontab -u root -
+(crontab -u root -l; echo "$line3" ) | crontab -u root -
 service cron reload
 fi
 
