@@ -27,7 +27,8 @@ then
 echo "Set your correct time zone now. Please refer to man pages on how to setup timezone, example: Europe/Dublin"
 read SETUPTIMEZONE
 timedatectl set-timezone $SETUPTIMEZONE
-echo "Your new date and time is: $SETUPTIME"
+echo "Your new date and time is:"
+date
 fi
 service cron restart
 
