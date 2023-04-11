@@ -433,6 +433,27 @@ echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 }
 
 ### End of healthchecks monitoring
+
+### Email notifications
+
+emailsetup (){
+echo "What is your email address?"
+read EMAILADDR
+echo "EMAILSETUP=Yes" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "EMAILSETUPADDR=$EMAILADDR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
+noemailsetup () {
+echo "EMAILSETUP=No" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
+failonlyemailsetup (){
+echo "What is your email address?"
+read EMAILADDR
+echo "EMAILSETUP=FailOnly" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "EMAILSETUPADDR=$EMAILADDR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
 ###### END OF FUNCTIONS
 ###### MAIN CODE
 
@@ -569,6 +590,24 @@ done
 echo "Input your restic repository password! You MUST store it securely somewhere else! Avoid using special characters which would break Linux!"
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+##########
+
+echo "Would you like to get email notifications?"
+
+select EMAILNOTIFY in "Yes" "No" "Fail-Only" ; do
+    case $EMAILNOTIFY in
+    
+    Yes ) emailsetup ; break;;
+    
+    No ) noemailsetup ; break;;
+    
+    Fail-Only ) failonlyemailsetup ; break;;
+    
+    esac
+done
+
+#############
 
 echo "Would you like to use healthchecks monitoring?"
 select HEALTHCHECKSSETUP in "YES" "NO" ; do
