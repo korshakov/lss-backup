@@ -1,5 +1,4 @@
 #!/bin/bash
-source /etc/lss-backup/database/backup-jobs/LSS001/LSS001-Configuration.env
 #source file will be added here.
 if [[ $MONITORING == "NO" ]]; then
 echo "Monitoring is disabled"
