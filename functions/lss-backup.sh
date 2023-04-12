@@ -16,21 +16,21 @@ then
     then
     echo "Restic finished with error $RESTICCODE Sending failed ping!"
         	export STATUS=18
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 
     if [[ $RESTICCODE == '3' ]]
     then
     echo "Restic finished with error $RESTICCODE Sending failed ping!"
         	export STATUS=19
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 
     if [[ $RESTICCODE != '1' && $RESTICCODE != '3' ]]
     then
     echo "Restic finished with unknown error, investigate!"
         	export STATUS=39
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 else
 figlet LSS RESTIC 
@@ -80,121 +80,121 @@ then
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=20
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '2' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=21
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '3' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=22
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '4' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=23
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '5' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=24
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '6' ]]
     then
         	export STATUS=25
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '10' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=26
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '11' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=27
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '12' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=28
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '13' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=29
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '14' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=30
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '20' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=31
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '21' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=32
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '22' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=33
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '23' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=34
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '24' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=35
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '25' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=36
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '30' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=37
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
     if [[ $RSYNCCODE == '35' ]]
     then
     echo "Rsync finished with error $RSYNCCODE Sending failed ping!"
         	export STATUS=38
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 
     if [[ "$RSYNCCODE" -ge 7 && "$RSYNCCODE" -le 9 ]] && [[ "$RSYNCCODE" -ge 15 && "$RSYNCCODE" -le 19 ]] && [[ "$RSYNCCODE" -ge 26 && "$RSYNCCODE" -le 29 ]] && [[ "$RSYNCCODE" -ge 31 && "$RSYNCCODE" -le 34 ]] && [[ "$RSYNCCODE" -ne 35 ]] && [[ "$RSYNCCODE" -gt 36 ]]
     then
     echo "Rsync finished with unknown error, investigate!"
         	export STATUS=40
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 else
 # Sending closing ping backup is finished
