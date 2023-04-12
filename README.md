@@ -11,7 +11,7 @@ wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.40.tar.gz
 ```
 tar -xvf v3.40.tar.gz
 rm v3.40.tar.gz
-mv lss-backup-v3.40 lss-backup
+mv lss-backup-3.40 lss-backup
 cd lss-backup
 chmod +x *.sh
 chmod +x functions/*.sh prep-dependencies/*.sh.prep
