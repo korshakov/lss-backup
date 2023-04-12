@@ -33,7 +33,6 @@ then
             /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 else
-export STATUS=0
 figlet LSS RESTIC 
 echo "-----------------------------------"
 echo "Restic backup finished succesfully."
@@ -198,7 +197,6 @@ then
             /bin/bash "$WORKDIR"/"$BKID"-notify.sh
     fi
 else
-export STATUS=0
 # Sending closing ping backup is finished
 figlet LSS RSYNC
 echo "----------------------------------"
