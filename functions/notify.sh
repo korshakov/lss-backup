@@ -6,8 +6,6 @@ else
 wget "$CRONDOMAIN"/ping/"$CRONID"/"$STATUS" -T 10 -t 5 -O /dev/null
 fi
 
-echo "Exit code is $STATUS"
-
 if [[ $EMAILSETUP == "Yes" ]] ; then
 
 if [[ $STATUS != "0" ]] ; then
