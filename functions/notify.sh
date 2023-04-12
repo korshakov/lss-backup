@@ -48,13 +48,7 @@ echo -e "Subject:${subject}\n${body}" | sendmail -t "${to}"
 
 else
 
-subject="$BKID-$BKFQ-$BKNAME Has finished sucessfully."
-
-body="$PROGRAM backup job $BKID-$BKFQ-$BKNAME has finished sucessfully. "
-
-to="$EMAILSETUPADDR"
-
-echo -e "Subject:${subject}\n${body}" | sendmail -t "${to}"
+echo "Email finished succesfully. Email notifications are to failure only. Not sending any emails."
 
 
 fi
