@@ -6,12 +6,12 @@ To Install:
 Make sure you are downloading the latest release.
 ```
 cd /etc
-wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.10.tar.gz
+wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.22-dev.tar.gz
 ```
 ```
-tar -xvf v3.10.tar.gz
-rm v3.10.tar.gz
-mv lss-backup-3.10 lss-backup
+tar -xvf v3.22-dev.tar.gz
+rm v3.22-dev.tar.gz
+mv lss-backup-v3.22-dev lss-backup
 cd lss-backup
 chmod +x *.sh
 chmod +x functions/*.sh prep-dependencies/*.sh.prep

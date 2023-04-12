@@ -1,3 +1,34 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@korshakov 
+korshakov
+/
+lss-backup
+Public
+Fork your own copy of korshakov/lss-backup
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Settings
+lss-backup/restic.sh
+@korshakov
+korshakov Update restic.sh
+Latest commit fd93287 20 hours ago
+ History
+ 1 contributor
+647 lines (443 sloc)  26.9 KB
+ 
+
 ##!/bin/bash
 
 
@@ -433,6 +464,27 @@ echo "CRONID=$SETUPCRONID" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 }
 
 ### End of healthchecks monitoring
+
+### Email notifications
+
+emailsetup (){
+echo "What is your email address?"
+read EMAILADDR
+echo "EMAILSETUP=Yes" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "EMAILSETUPADDR=$EMAILADDR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
+noemailsetup () {
+echo "EMAILSETUP=No" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
+failonlyemailsetup (){
+echo "What is your email address?"
+read EMAILADDR
+echo "EMAILSETUP=FailOnly" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+echo "EMAILSETUPADDR=$EMAILADDR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+}
+
 ###### END OF FUNCTIONS
 ###### MAIN CODE
 
@@ -479,7 +531,7 @@ cp ./functions/lss-backup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-
 cp ./functions/log-cleanup.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
 cp ./functions/cron-add.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
-cp ./functions/healthchecks.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-healthchecks.sh
+cp ./functions/notify.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-notify.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-local-source-folder-checks.sh
@@ -494,7 +546,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-log-cleanup.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-add.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-cron-remove.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-healthchecks.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-notify.sh
 
 echo "Name your backup e.g. Sage-Backup-TO-LS-CLOUD Important! Spaces are not allowed!"
 read SETUPBKNAME
@@ -570,6 +622,24 @@ echo "Input your restic repository password! You MUST store it securely somewher
 read SETUPRESTICREPOPASSWD
 echo "RESTIC_PASSWORD=$SETUPRESTICREPOPASSWD" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
+##########
+
+echo "Would you like to get email notifications?"
+
+select EMAILNOTIFY in "Yes" "No" "Fail-Only" ; do
+    case $EMAILNOTIFY in
+    
+    Yes ) emailsetup ; break;;
+    
+    No ) noemailsetup ; break;;
+    
+    Fail-Only ) failonlyemailsetup ; break;;
+    
+    esac
+done
+
+#############
+
 echo "Would you like to use healthchecks monitoring?"
 select HEALTHCHECKSSETUP in "YES" "NO" ; do
     case $HEALTHCHECKSSETUP in
@@ -606,3 +676,18 @@ select RUNBACKUP in "YES" "NO" ; do
 done
 
 fi
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+lss-backup/restic.sh at developing · korshakov/lss-backup

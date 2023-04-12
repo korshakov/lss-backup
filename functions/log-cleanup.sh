@@ -6,5 +6,5 @@ find $WORKDIR/logs/* -type f -mmin +20160
 echo "Deleting selected files older than 2 weeks from above list."
 find $WORKDIR/logs/* -type f -mmin +20160 -exec rm -rf {} \;
 echo "Done"
-export STATUS=""
-/bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+export STATUS="0"
+/bin/bash "$WORKDIR"/"$BKID"-notify.sh
