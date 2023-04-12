@@ -52,15 +52,5 @@ source ~/.bashrc
 
 # Print a message to confirm the alias has been set
 echo "Alias $alias_name set to $lss_backup_path"
-
+echo "You can call this program anytime typing lss-backup."
 exec bash
-echo "In future you can call LSS Backup by typing anywhere lss-backup."
-echo "Would you like to proceed to backup wizard? (y=Yes,n=No)"
-read WIZARD
-if [[ $WIZARD == 'y' ]]
-then
-echo "LSS Backup is now installed."
-./backup-wizard.sh
-else
-echo "LSS Backup is now installed."
-fi
