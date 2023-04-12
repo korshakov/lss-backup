@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@korshakov 
-korshakov
-/
-lss-backup
-Public
-Fork your own copy of korshakov/lss-backup
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-Settings
-lss-backup/restic.sh
-@korshakov
-korshakov Update restic.sh
-Latest commit fd93287 20 hours ago
- History
- 1 contributor
-647 lines (443 sloc)  26.9 KB
- 
-
 ##!/bin/bash
 
 
@@ -676,18 +645,3 @@ select RUNBACKUP in "YES" "NO" ; do
 done
 
 fi
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-lss-backup/restic.sh at developing · korshakov/lss-backup
