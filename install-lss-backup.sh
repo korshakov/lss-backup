@@ -32,6 +32,29 @@ date
 fi
 service cron restart
 
+# Set the path to the lss-backup.sh script
+lss_backup_path="/etc/lss-backup/lss-backup.sh"
+
+# Set the desired alias name
+alias_name="lss-backup"
+
+# Check if the alias already exists
+if grep -q "alias $alias_name=" ~/.bashrc; then
+    echo "Alias already exists"
+else
+    # Add the alias to the .bashrc file
+    echo "alias $alias_name='cd /etc/lss-backup && $lss_backup_path'" >> ~/.bashrc
+    echo "Alias created"
+fi
+
+# Reload the .bashrc file to apply changes
+source ~/.bashrc
+
+# Print a message to confirm the alias has been set
+echo "Alias $alias_name set to $lss_backup_path"
+
+exec bash
+echo "In future you can call LSS Backup by typing anywhere lss-backup."
 echo "Would you like to proceed to backup wizard? (y=Yes,n=No)"
 read WIZARD
 if [[ $WIZARD == 'y' ]]
