@@ -20,7 +20,7 @@ body=$(cat $LOG_FILE)
 
 to="$EMAILSETUPADDR"
 
-echo -e "Subject:${subject}\n${body}" | sendmail -t "${to}"
+echo -e "Subject:${subject}\n${body}" | /usr/sbin/sendmail -t "${to}"
 
 else
 
@@ -30,7 +30,7 @@ body=$(cat $LOG_FILE)
 
 to="$EMAILSETUPADDR"
 
-echo -e "Subject:${subject}\n${body}" | sendmail -t "${to}"
+echo -e "Subject:${subject}\n${body}" | /usr/sbin/sendmail -t "${to}"
 
 
 fi
@@ -46,7 +46,7 @@ body=$(cat $LOG_FILE)
 
 to="$EMAILSETUPADDR"
 
-echo -e "Subject:${subject}\n${body}" | sendmail -t "${to}"
+echo -e "Subject:${subject}\n${body}" | /usr/sbin/sendmail -t "${to}"
 
 else
 
