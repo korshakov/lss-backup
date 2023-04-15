@@ -6,7 +6,7 @@ To Install:
 Make sure you are downloading the latest release.
 ```
 cd /etc
-wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.41.tar.gz
+wget https://github.com/korshakov/lss-backup/archive/refs/tags/v3.42.tar.gz
 ```
 ```
 tar -xvf v3.42.tar.gz
