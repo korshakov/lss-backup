@@ -20,7 +20,7 @@ cp ./functions/cron-add.sh ./database/backup-jobs/"$BKID"/$BKID-cron-add.sh
 cp ./functions/cron-remove.sh ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 cp ./functions/lss-backup.sh ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 cp ./functions/log-cleanup.sh ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
-cp ./functions/healthchecks.sh ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
+cp ./functions/notify.sh ./database/backup-jobs/"$BKID"/$BKID-notify.sh
 
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-source-type-checks.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-local-source-folder-checks.sh
@@ -36,7 +36,7 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Co
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-cron-remove.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-lss-backup.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-log-cleanup.sh
-printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-healthchecks.sh
+printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$BKID"/"$BKID"-Configuration.env" . x | ex ./database/backup-jobs/"$BKID"/$BKID-notify.sh
 
 if [[ $RETENTION == 'YES-FULL' ]]
 then
