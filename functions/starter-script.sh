@@ -2,7 +2,6 @@
 
 echo "Welcome to LS Solutions Backup!"
 
-export STATUS=start
-/bin/bash "$WORKDIR"/"$BKID"-notify.sh
+wget "$CRONDOMAIN"/ping/"$CRONID"/start -T 10 -t 5 -O /dev/null
 
 /bin/bash "$WORKDIR"/"$BKID"-backup-config-check.sh
