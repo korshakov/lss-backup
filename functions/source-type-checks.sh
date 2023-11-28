@@ -28,7 +28,7 @@ then
                 else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
         	export STATUS=9
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
                 exit
                 fi
 
@@ -44,7 +44,7 @@ then
 		else
         	echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
         	export STATUS=9
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
         	exit
 		fi
 
@@ -80,7 +80,7 @@ then
 		else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
         	export STATUS=9
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
                 exit
                 fi
 
@@ -96,7 +96,7 @@ then
 		else
                 echo "Automatic mount of source failed! Aborting backup and sending failed ping!"
         	export STATUS=9
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
                 exit
                 fi
 
@@ -114,5 +114,5 @@ exit
 else
 echo "Variable settings are incorrect! Sending failed ping!"!
         	export STATUS=11
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
 fi
