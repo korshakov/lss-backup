@@ -27,7 +27,7 @@ then
 	if ! read -r -t 50 FIRSTRUN; then
      	# if its not provided then the script should exit
         	export STATUS=15
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh && exit
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh && exit
      	exit
 	fi
 	if [[ $FIRSTRUN == 'y' ]]
@@ -43,7 +43,7 @@ then
 	else
 	# User confirmed that this shoud not happen! Sending failed ping and exitting.
         	export STATUS=16
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
 	exit
 	fi
     fi
@@ -61,5 +61,5 @@ if [[ $PROGRAM != 'RESTIC' ]] && [[ $PROGRAM != 'RSYNC' ]]
 then
 echo "Something went wrong. Backup config file must be corrupted. Sending failed ping and exiting!"
         	export STATUS=17
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
 fi
