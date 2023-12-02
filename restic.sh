@@ -16,7 +16,11 @@ echo "Which minute of the hour $SETUPBKCRONTIMEHH should backup start? Example: 
 read SETUPBKCRONTIMEMM
 echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "Your backup will run daily at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
+echo "Which days of a week should backup run?"
+read "SETUPBKCRONDAYS"
+echo "BKCRONDAYS=$SETUPBKCRONDAYS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Your backup will run at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM on these days: $SETUPBKCRONDAYS"
 }
 
 ### END OF DAILY FUNCTION
@@ -528,9 +532,9 @@ select SETUPBKFQ in "Daily" "Weekly" "Monthly" "Manual-Only"; do
         Daily ) dailyfunction ; break;;
 
         Weekly ) weeklyfunction ; break;;
-        
+
         Monthly ) monthlyfunction ; break;;
-        
+
         Manual-Only ) manualfunction ; break;;
 
     esac
@@ -546,7 +550,7 @@ select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
         LOCAL) localsourcefunction ; break;;
 
         SMB ) smbsourcefunction ; break;;
-        
+
         NFS ) nfssourcefunction ; break;;
 
     esac
@@ -561,9 +565,9 @@ select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS" "S3"; do
         LOCAL) localdestfunction ; break;;
 
         SMB ) smbdestfunction ; break;;
-        
+
         NFS ) nfsdestfunction ; break;;
-        
+
         S3 ) s3destfunction ; break;;
 
     esac
@@ -597,13 +601,13 @@ echo "Would you like to get email notifications?"
 
 select EMAILNOTIFY in "Yes" "No" "Fail-Only" ; do
     case $EMAILNOTIFY in
-    
+
     Yes ) emailsetup ; break;;
-    
+
     No ) noemailsetup ; break;;
-    
+
     Fail-Only ) failonlyemailsetup ; break;;
-    
+
     esac
 done
 
