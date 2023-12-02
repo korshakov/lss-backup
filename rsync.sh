@@ -15,7 +15,11 @@ echo "Which minute of the hour $SETUPBKCRONTIMEHH should backup start? Example: 
 read SETUPBKCRONTIMEMM
 echo "BKCRONTIMEMM=$SETUPBKCRONTIMEMM" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "Your backup will run daily at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM"
+echo "Which days of a week should backup run?"
+read "SETUPBKCRONDAYS"
+echo "BKCRONDAYS=$SETUPBKCRONDAYS" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Your backup will run at $SETUPBKCRONTIMEHH:$SETUPBKCRONTIMEMM on these days: $SETUPBKCRONDAYS"
 }
 
 ### END OF DAILY FUNCTION
@@ -377,8 +381,8 @@ done
 echo "### DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "What is your destination source type? Either LOCAL, SMB, NFS or S3."
-select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
-    case $SETUPBKSOURCETYPE in
+select SETUPBKDESTTYPE in "LOCAL" "SMB" "NFS"; do
+    case $SETUPBKDESTTYPE in
 
         LOCAL) localdestfunction ; break;;
 
@@ -405,7 +409,35 @@ cp ./functions/starter-script.sh ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-$SETUPBKFQ-$SETUPBKNAME.sh"
 
 echo "Writing to simple database file"
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Not-available |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+
+
+#### Adding entries to database file
+
+
+if [[ $SETUPBKFQ == 'Daily' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |${SETUPBKSOURCETYPE}_to_${SETUPBKDESTTYPE} |$SETUPBKFQ |Sync_Only |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONDAYS} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Weekly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |${SETUPBKSOURCETYPE}_to_${SETUPBKDESTTYPE} |$SETUPBKFQ |Sync_Only |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONWEEKLY} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Monthly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |${SETUPBKSOURCETYPE}_to_${SETUPBKDESTTYPE} |$SETUPBKFQ |Sync_Only |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_${SETUPBKCRONMONTHLY}_*_* " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Manual-Only' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RSYNC |${SETUPBKSOURCETYPE}_to_${SETUPBKDESTTYPE} |$SETUPBKFQ |Sync_Only |No_Schedule " >> ./database/backup-database.txt
+fi
+
+
+
+
+#### End of adding entries to database file
 
 
 
