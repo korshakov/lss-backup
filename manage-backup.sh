@@ -157,11 +157,13 @@ rm ./database/tmpfile.tmp
 
     else
 
-    select rsynccommanderselect in "Run Backup Now" "Restore Backup" "Exit"; do
+    select rsynccommanderselect in "Run Backup Now" "Restore Backup" "Destroy Backup DANGER" "Exit"; do
     case $rsynccommanderselect in
     "Run Backup Now" ) backupnow ; break;;
 
     "Restore Backup" ) restorebackup ; break;;
+    
+    "Destroy Backup DANGER" ) destroybackup ; break ;;
 
     "Exit" ) echo "Nothing to do." ; exit;;
     esac
