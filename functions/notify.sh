@@ -50,7 +50,7 @@ echo -e "Subject:${subject}\n${body}" | /usr/sbin/sendmail -t "${to}"
 
 else
 
-echo "Email finished succesfully. Email notifications are to failure only. Not sending any emails."
+echo "Backup finished succesfully. Email notifications are to failure only. Not sending any emails."
 
 
 fi
