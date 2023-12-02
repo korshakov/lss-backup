@@ -307,7 +307,35 @@ echo "How many annual backups to keep? Example: 2y means 2 years."
 read SETUPRETENANNUAL
 echo "RESTIC_FORGETANNUAL=$SETUPRETENANNUAL" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+
+
+#### Adding entries to database file
+
+
+if [[ $SETUPBKFQ == 'Daily' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONDAYS} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Weekly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONWEEKLY} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Monthly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_${SETUPBKCRONMONTHLY}_*_* " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Manual-Only' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE-to-$SETUPBKDESTTYPE |$SETUPBKFQ |KWD:$SETUPRETENDAILY--KWW:$SETUPRETENWEEKLY--KWM:$SETUPRETENMONTHLY--KWY:$SETUPRETENANNUAL |No-Schedule " >> ./database/backup-database.txt
+fi
+
+
+
+
+#### End of adding entries to database file
 
 
 }
@@ -328,7 +356,34 @@ printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SET
 echo "How many last (most recent) backups to keep? Enter a numeric number. Example: 7"
 read SETUPRETENLAST
 echo "RESTIC_FORGETLAST=$SETUPRETENLAST" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Last-only:$SETUPRETENLAST |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+
+#### Adding entries to database file
+
+
+if [[ $SETUPBKFQ == 'Daily' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Last_only:$SETUPRETENLAST |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONDAYS} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Weekly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Last_only:$SETUPRETENLAST |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONWEEKLY} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Monthly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Last_only:$SETUPRETENLAST |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_${SETUPBKCRONMONTHLY}_*_* " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Manual-Only' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Last_only:$SETUPRETENLAST |No_Schedule " >> ./database/backup-database.txt
+fi
+
+
+
+
+#### End of adding entries to database file
 
 
 }
@@ -367,7 +422,35 @@ echo "No retention policy will be specified."
 echo "RETENTION=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 cp ./functions/lss-no-reten.sh ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
 printf '%s\n' 1a "source "$SETUPWORKDIR"/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID"-Configuration.env" . x | ex ./database/backup-jobs/"$SETUPBKID"/$SETUPBKID-lss-no-reten.sh
-echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$BKSOURCETYPE-to-$BKDESTTYPE |$SETUPBKFQ |Not-set |/backup-jobs/$SETUPBKID/$SETUPBKID-Configuration.env " >> ./database/backup-database.txt
+
+
+#### Adding entries to database file
+
+
+if [[ $SETUPBKFQ == 'Daily' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Not_set |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONDAYS} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Weekly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Not_set |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_*_*_${SETUPBKCRONWEEKLY} " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Monthly' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Not_set |${SETUPBKCRONTIMEMM}_${SETUPBKCRONTIMEHH}_${SETUPBKCRONMONTHLY}_*_* " >> ./database/backup-database.txt
+fi
+
+if [[ $SETUPBKFQ == 'Manual-Only' ]]
+then
+echo "|$SETUPBKID |$SETUPTIMESTAMP |$SETUPBKNAME |RESTIC |$SETUPBKSOURCETYPE_to_$SETUPBKDESTTYPE |$SETUPBKFQ |Not_set |No_Schedule " >> ./database/backup-database.txt
+fi
+
+
+
+
+
 
 }
 
@@ -559,8 +642,8 @@ done
 echo "### DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
 echo "What is your destination source type? Either LOCAL, SMB, NFS or S3."
-select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS" "S3"; do
-    case $SETUPBKSOURCETYPE in
+select SETUPBKDESTTYPE in "LOCAL" "SMB" "NFS" "S3"; do
+    case $SETUPBKDESTTYPE in
 
         LOCAL) localdestfunction ; break;;
 
