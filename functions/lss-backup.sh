@@ -8,8 +8,16 @@ then
 START_TIME=$SECONDS
 TIMERTIMESTAMP=`date "+%d-%m-%Y--%H:%M"`
 echo "Starting restic process at $TIMERTIMESTAMP"
+
+
+if [[ $EXCLUDE == 'YES' ]]
+then
+restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information' --exclude='$RECYCLE.BIN' --exclude-file=${EXCLUDEFILE}
+RESTICCODE="$?"
+else
 restic -r $LSS_REPOSITORY backup $SDIR -v --exclude 'System Volume Information' --exclude='$RECYCLE.BIN'
 RESTICCODE="$?"
+fi
 if [[ $RESTICCODE != '0' ]]
 then
     if [[ $RESTICCODE == '1' ]]
