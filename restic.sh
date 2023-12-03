@@ -81,6 +81,33 @@ echo "BKFQ=Manual-Only" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Confi
 
 ### END OF MANUAL FUNCTION
 
+### START OF EXLUSION FUNCTION
+
+exlusionfunction (){
+echo "EXCLUDE=YES" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "EXCLUDEFILE=${SETUPWORKDIR}/database/backup-jobs/"$SETUPBKID"/${SETUPBKID}-exclusion-file.txt" >> ./database/backup-jobs/${SETUPBKID}/${SETUPBKID}-Configuration.env
+
+touch ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-exclusion-file.txt"
+
+echo "Your exclusion file has been created! Don't forget to input your exlusion parameters according to restic guidelines."
+
+echo "You exclusion file is located at /etc/lss-backup/database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-exclusion-file.txt""
+}
+
+### END OF EXLUSION FUNCTION
+
+
+### START OF NOEXLUSION FUNCTION
+
+noexclusionfunction (){
+echo "EXCLUDE=NO" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+}
+
+### END OF NOEXLUSION FUNCTION
+
+
 ### LOCAL SOURCE FUNCTION
 
 localsourcefunction () {
@@ -541,6 +568,8 @@ echo "EMAILSETUP=FailOnly" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Co
 echo "EMAILSETUPADDR=$EMAILADDR" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 }
 
+### End of Email notifications
+
 ###### END OF FUNCTIONS
 ###### MAIN CODE
 
@@ -638,6 +667,23 @@ select SETUPBKSOURCETYPE in "LOCAL" "SMB" "NFS"; do
 
     esac
 done
+
+echo "### EXCLUSION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
+
+echo "Do you want to use restic exclusion file?"
+select SETUPEXLUSIONFILE in "Yes" "No"; do
+    case $SETUPEXLUSIONFILE in
+
+        Yes ) exlusionfunction ; break;;
+
+        No ) noexclusionfunction ; break;;
+
+    esac
+done
+
+
+
+
 
 echo "### DESTINATION VARIABLES ###" >> ./database/backup-jobs/"$SETUPBKID"/"$SETUPBKID-Configuration.env"
 
