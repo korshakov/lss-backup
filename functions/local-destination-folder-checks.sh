@@ -25,6 +25,6 @@ if [ -d "$BACKUPDIR" ];
 	else
         echo "Automatic LOCAL destination folder creation failed! Sending failed ping!"
         	export STATUS=8
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
 	fi
 fi
