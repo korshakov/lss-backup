@@ -9,6 +9,6 @@ if find "$SDIR" -mindepth 1 -maxdepth 1 | read; then
 else
    echo "Warning LOCAL source is either empty or does not exist! There is nothing to backup! Sending failed ping and exitting backup process."
         	export STATUS=7
-            /bin/bash "$WORKDIR"/"$BKID"-healthchecks.sh
+            /bin/bash "$WORKDIR"/"$BKID"-notify.sh
    exit
 fi
