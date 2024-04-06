@@ -18,7 +18,7 @@ then
         if [[ -z "$DOMAIN" ]]
         then
         	echo "No domain specified, using username & password only to login to //"$MPTARGETIP"/"$MPSN" share."
-        	mount -t cifs //"$MPTARGETIP"/"$MPSN" "$SDIR" -o username="$USERNAME",password="$PASSWORD"
+        	mount -t cifs //"$MPTARGETIP"/"$MPSN" "$SDIR" -o username="$USERNAME",password="$PASSWORD",nouser_xattr
 		echo "Checking if mount was succesfull"
                 if mount | grep "$SDIR" > /dev/null; then
                 echo "Source mountpoint is now mounted as per config"
@@ -34,7 +34,7 @@ then
 
         else
         	echo "Domain has been specified, using username, password and domain to login to //$MPTARGETIP/$MPSN share."
-        	mount -t cifs //"$MPTARGETIP"/"$MPSN" "$SDIR" -o username="$USERNAME",password="$PASSWORD",domain="$DOMAIN"
+        	mount -t cifs //"$MPTARGETIP"/"$MPSN" "$SDIR" -o username="$USERNAME",password="$PASSWORD",domain="$DOMAIN",nouser_xattr
 		echo "Checking if mount was succesfull"
 		if mount | grep "$SDIR" > /dev/null; then
         	echo "Source mountpoint is now mounted as per config"
